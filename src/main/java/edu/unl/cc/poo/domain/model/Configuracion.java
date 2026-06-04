@@ -17,6 +17,7 @@ import java.util.Map;
 public class Configuracion {
 
     private static final String MONEDA = "USD";
+    private static final String NOMBRE_DEFECTO = "PARQUEADERO CENTRAL";
 
     private String nombreParqueadero;
     private String moneda;
@@ -26,6 +27,7 @@ public class Configuracion {
     private int columnasDefecto;
 
     public Configuracion() {
+        this.nombreParqueadero = NOMBRE_DEFECTO;
         this.moneda = MONEDA;
         this.tarifas = new EnumMap<>(TipoVehiculo.class);
         this.filasDefecto = 5;
@@ -44,30 +46,43 @@ public class Configuracion {
     }
 
 
-    public void guardarConfiguracion() {
+    public boolean guardarConfiguracion() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter("configuracion.json")) {
+        String rutaArchivo = System.getProperty("user.dir") + "/configuracion.json";
+        try (FileWriter writer = new FileWriter(rutaArchivo)) {
             gson.toJson(this, writer);
+            return true;
         } catch (IOException e) {
             System.err.println("Error al guardar configuracion: " + e.getMessage());
+            return false;
         }
     }
 
 
     public void cargarConfiguracion() {
         Gson gson = new Gson();
-        try (FileReader reader = new FileReader("configuracion.json")) {
+        String rutaArchivo = System.getProperty("user.dir") + "/configuracion.json";
+        try (FileReader reader = new FileReader(rutaArchivo)) {
             Configuracion cargada = gson.fromJson(reader, Configuracion.class);
             if (cargada != null) {
-                this.nombreParqueadero = cargada.nombreParqueadero;
-                this.logoPath = cargada.logoPath;
-                this.tarifas = cargada.tarifas;
-                this.filasDefecto = cargada.filasDefecto;
-                this.columnasDefecto = cargada.columnasDefecto;
-                this.moneda = MONEDA; // moneda siempre es USD
+                if (cargada.nombreParqueadero != null && !cargada.nombreParqueadero.isBlank()) {
+                    this.nombreParqueadero = cargada.nombreParqueadero;
+                }
+                this.logoPath = cargada.logoPath != null ? cargada.logoPath : this.logoPath;
+                if (cargada.tarifas != null) {
+                    this.tarifas = new EnumMap<>(TipoVehiculo.class);
+                    this.tarifas.putAll(cargada.tarifas);
+                }
+                if (cargada.filasDefecto > 0) {
+                    this.filasDefecto = cargada.filasDefecto;
+                }
+                if (cargada.columnasDefecto > 0) {
+                    this.columnasDefecto = cargada.columnasDefecto;
+                }
+                this.moneda = MONEDA;
             }
         } catch (IOException e) {
-            System.err.println("No se encontro archivo de configuracion, usando valores por defecto.");
+            // Archivo no existe, usar valores por defecto
         }
     }
 

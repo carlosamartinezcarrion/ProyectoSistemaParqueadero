@@ -10,10 +10,12 @@ public class Vehiculo {
 
     private String placa;
     private String nombreConductor;
+    private TipoVehiculo tipoEspecifico;
 
     public Vehiculo(String placa, String nombreConductor) {
         this.placa = placa;
         this.nombreConductor = nombreConductor;
+        this.tipoEspecifico = null;
     }
 
 
@@ -26,10 +28,14 @@ public class Vehiculo {
     }
 
     public TipoVehiculo getTipo() {
+        if (tipoEspecifico != null) {
+            return tipoEspecifico;
+        }
         return determinarTipoPorPlaca();
     }
 
     public void setTipo(TipoVehiculo tipo) {
+        this.tipoEspecifico = tipo;
     }
 
     public String getNombreConductor() {
