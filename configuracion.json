@@ -1,0 +1,20 @@
+{
+  "nombreParqueadero": "PARQUEADERO CENTRAL",
+  "moneda": "USD",
+  "tarifas": {
+    "AUTOMOVIL": {
+      "precioPorHora": 1.0,
+      "fraccionMinutos": 30.0
+    },
+    "MOTO": {
+      "precioPorHora": 0.5,
+      "fraccionMinutos": 30.0
+    },
+    "CAMIONETA": {
+      "precioPorHora": 1.5,
+      "fraccionMinutos": 30.0
+    }
+  },
+  "filasDefecto": 2,
+  "columnasDefecto": 2
+}
