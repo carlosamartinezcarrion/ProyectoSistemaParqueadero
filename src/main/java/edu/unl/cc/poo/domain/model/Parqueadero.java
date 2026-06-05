@@ -78,9 +78,20 @@ public class Parqueadero {
     public void setEstadoEspacio(int fila, int columna, EstadoEspacio estado) {
         mapa.validarPosicion(fila, columna);
         EspacioParqueadero espacio = mapa.getEspacio(fila, columna);
-        if (espacio != null) {
-            espacio.setEstado(estado);
+        if (espacio == null) {
+            throw new IllegalStateException("No se encontro el espacio solicitado.");
         }
+        if (estado == null) {
+            throw new IllegalArgumentException("El estado no puede ser nulo.");
+        }
+        if (estado == EstadoEspacio.OCUPADO) {
+            throw new IllegalArgumentException("El estado OCUPADO se asigna al registrar una entrada.");
+        }
+        if (espacio.estaOcupado() && estado != EstadoEspacio.OCUPADO) {
+            throw new IllegalStateException(
+                    "El espacio (" + fila + "," + columna + ") esta ocupado y no se puede cambiar su estado.");
+        }
+        espacio.setEstado(estado);
     }
 
 

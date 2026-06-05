@@ -1,6 +1,7 @@
 package edu.unl.cc.poo;
 
 import edu.unl.cc.poo.domain.model.*;
+import edu.unl.cc.poo.domain.enums.EstadoEspacio;
 import edu.unl.cc.poo.domain.enums.TipoVehiculo;
 import edu.unl.cc.poo.view.ConsoleView;
 
@@ -48,10 +49,11 @@ public class Main {
             System.out.println("│ 3. Ver Mapa del Parqueadero               │");
             System.out.println("│ 4. Ver Resumen                            │");
             System.out.println("│ 5. Ver Historial de Registros             │");
-            System.out.println("│ 6. Configuración                          │");
-            System.out.println("│ 7. Salir                                  │");
+            System.out.println("│ 6. Gestionar Espacio                      │");
+            System.out.println("│ 7. Configuración                          │");
+            System.out.println("│ 8. Salir                                  │");
             System.out.println("└───────────────────────────────────────────┘");
-            System.out.print("Selecciona una opción (1-7): ");
+            System.out.print("Selecciona una opción (1-8): ");
 
             try {
                 String entrada = scanner.nextLine().trim();
@@ -60,7 +62,7 @@ public class Main {
                 try {
                     opcion = Integer.parseInt(entrada);
                 } catch (NumberFormatException e) {
-                    view.mostrarError("Entrada inválida. Debes ingresar un número (1-7). Intenta de nuevo.");
+                    view.mostrarError("Entrada inválida. Debes ingresar un número (1-8). Intenta de nuevo.");
                     continue;
                 }
 
@@ -70,12 +72,13 @@ public class Main {
                     case 3 -> verMapa();
                     case 4 -> verResumen();
                     case 5 -> verHistorial();
-                    case 6 -> menuConfiguracion();
-                    case 7 -> {
+                    case 6 -> gestionarEspacio();
+                    case 7 -> menuConfiguracion();
+                    case 8 -> {
                         System.out.println("\n¡Gracias por usar el Sistema de Parqueadero!");
                         ejecutando = false;
                     }
-                    default -> view.mostrarError("Opción inválida. Selecciona entre 1 y 7. Intenta de nuevo.");
+                    default -> view.mostrarError("Opción inválida. Selecciona entre 1 y 8. Intenta de nuevo.");
                 }
             } catch (Exception e) {
                 view.mostrarError("Error inesperado: " + e.getMessage());
@@ -479,6 +482,104 @@ public class Main {
             view.mostrarError("Registro no encontrado: " + e.getMessage());
         } catch (IllegalStateException e) {
             view.mostrarError("Error al procesar salida: " + e.getMessage());
+        } catch (Exception e) {
+            view.mostrarError("Error inesperado: " + e.getMessage());
+        }
+    }
+
+    private static void gestionarEspacio() {
+        System.out.println("\n=== GESTIONAR ESPACIO ===");
+        view.mostrarMapaParqueadero(parqueadero);
+
+        int fila = -1;
+        boolean filaValida = false;
+        while (!filaValida) {
+            System.out.print("Ingresa la fila (A, B, C...) o 'cancelar': ");
+            String filaStr = scanner.nextLine().trim().toUpperCase();
+
+            if (filaStr.equalsIgnoreCase("cancelar")) {
+                return;
+            }
+
+            if (filaStr.isEmpty() || filaStr.length() > 1) {
+                view.mostrarError("Fila inválida. Usa una sola letra. Intenta de nuevo.");
+                continue;
+            }
+
+            fila = filaStr.charAt(0) - 'A';
+
+            if (fila < 0 || fila >= parqueadero.getMapa().getFilas()) {
+                view.mostrarError("Fila fuera de rango. Intenta de nuevo.");
+                continue;
+            }
+            filaValida = true;
+        }
+
+        int columna = -1;
+        boolean columnaValida = false;
+        while (!columnaValida) {
+            System.out.print("Ingresa la columna (número) o 'cancelar': ");
+            String entradaCol = scanner.nextLine().trim();
+
+            if (entradaCol.equalsIgnoreCase("cancelar")) {
+                return;
+            }
+
+            try {
+                columna = Integer.parseInt(entradaCol);
+
+                if (columna < 1 || columna > parqueadero.getMapa().getColumnas()) {
+                    view.mostrarError("Columna fuera de rango. Intenta de nuevo.");
+                    continue;
+                }
+                columnaValida = true;
+            } catch (NumberFormatException e) {
+                view.mostrarError("Entrada inválida. Debes ingresar un número. Intenta de nuevo.");
+            }
+        }
+
+        try {
+            var espacio = parqueadero.getMapa().getEspacio(fila, columna - 1);
+            if (espacio == null) {
+                view.mostrarError("No se encontró el espacio solicitado.");
+                return;
+            }
+
+            System.out.println("Estado actual: " + espacio.getEstado().getDescripcion());
+            if (espacio.estaOcupado()) {
+                view.mostrarError("El espacio está ocupado. Debes registrar la salida antes de cambiar su estado.");
+                return;
+            }
+
+            System.out.println("1. Inhabilitar");
+            System.out.println("2. Habilitar (dejar libre)");
+            System.out.print("Selecciona una opción (1-2) o 'cancelar': ");
+            String opcion = scanner.nextLine().trim();
+
+            if (opcion.equalsIgnoreCase("cancelar")) {
+                return;
+            }
+
+            EstadoEspacio nuevoEstado;
+            switch (opcion) {
+                case "1" -> nuevoEstado = EstadoEspacio.INHABILITADO;
+                case "2" -> nuevoEstado = EstadoEspacio.LIBRE;
+                default -> {
+                    view.mostrarError("Opción inválida. Debes seleccionar 1 o 2.");
+                    return;
+                }
+            }
+
+            if (espacio.getEstado() == nuevoEstado) {
+                view.mostrarMensaje("El espacio ya estaba en ese estado.");
+                return;
+            }
+
+            parqueadero.setEstadoEspacio(fila, columna - 1, nuevoEstado);
+            view.mostrarMensaje("✓ Estado del espacio actualizado correctamente");
+            view.mostrarMapaParqueadero(parqueadero);
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            view.mostrarError(e.getMessage());
         } catch (Exception e) {
             view.mostrarError("Error inesperado: " + e.getMessage());
         }

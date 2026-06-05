@@ -31,8 +31,19 @@ public class EspacioParqueadero {
         return estado == EstadoEspacio.LIBRE;
     }
 
+    public boolean estaOcupado() {
+        return estado == EstadoEspacio.OCUPADO;
+    }
+
+    public boolean estaInhabilitado() {
+        return estado == EstadoEspacio.INHABILITADO;
+    }
+
     public void setEstado(EstadoEspacio estado) {
         this.estado = estado;
+        if (estado != EstadoEspacio.OCUPADO) {
+            this.idRegistroActivo = null;
+        }
     }
 
 
