@@ -95,19 +95,6 @@ public class Parqueadero {
     }
 
 
-    public void imprimirResumen() {
-        System.out.println("=================================================");
-        System.out.println("  RESUMEN PARQUEADERO: " + nombre);
-        System.out.println("=================================================");
-        System.out.printf("  Capacidad total  : %d espacios%n", capacidad);
-        System.out.printf("  Espacios libres  : %d%n", mapa.contarLibres());
-        System.out.printf("  Espacios ocupados: %d%n", mapa.contarOcupados());
-        System.out.printf("  Inhabilitados    : %d%n", mapa.contarInhabilitados());
-        System.out.printf("  Moneda           : %s%n", configuracion.getMoneda());
-        System.out.println("=================================================");
-    }
-
-
     public Registro buscarRegistroActivo(String registroId) {
         return historial.stream()
                 .filter(r -> r.getId().equalsIgnoreCase(registroId) && r.estaActivo())

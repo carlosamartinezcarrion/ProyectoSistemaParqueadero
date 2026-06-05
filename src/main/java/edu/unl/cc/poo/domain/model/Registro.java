@@ -1,6 +1,7 @@
 package edu.unl.cc.poo.domain.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,9 @@ import java.util.UUID;
  * Calcula duracion y total a cobrar en USD.
  */
 public class Registro {
+
+    private static final DateTimeFormatter FORMATO_FECHA = 
+            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     private String id;
     private Vehiculo vehiculo;
@@ -93,7 +97,8 @@ public class Registro {
 
     @Override
     public String toString() {
-        return String.format("Registro{id='%s', placa='%s', espacio='%s', entrada=%s}",
-                id, vehiculo.getPlaca(), espacio.getEtiqueta(), fechaHoraEntrada);
+        return String.format("Registro{id='%s', placa='%s', espacio='%s', entrada=%s, tipo vehiculo=%s}",
+                id, vehiculo.getPlaca(), espacio.getEtiqueta(), 
+                fechaHoraEntrada.format(FORMATO_FECHA), vehiculo.getTipo());
     }
 }
