@@ -2,7 +2,7 @@ package edu.unl.cc.poo;
 
 import edu.unl.cc.poo.domain.model.*;
 import edu.unl.cc.poo.view.ConsoleView;
-import edu.unl.cc.poo.business.PdfService;
+import edu.unl.cc.poo.domain.business.PdfService;
 
 public class Main {
 

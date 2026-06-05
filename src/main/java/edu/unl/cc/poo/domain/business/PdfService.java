@@ -1,4 +1,4 @@
-package edu.unl.cc.poo.business;
+package edu.unl.cc.poo.domain.business;
 
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.colors.ColorConstants;
@@ -12,7 +12,6 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
-import edu.unl.cc.poo.domain.model.Configuracion;
 import edu.unl.cc.poo.domain.model.Registro;
 import edu.unl.cc.poo.domain.model.Ticket;
 
