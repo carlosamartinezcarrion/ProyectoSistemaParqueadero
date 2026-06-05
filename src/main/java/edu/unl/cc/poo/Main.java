@@ -175,7 +175,7 @@ public class Main {
         int filas = -1;
         boolean filasValidas = false;
         while (!filasValidas) {
-            System.out.print("Número de filas (1-26) o 'cancelar': ");
+            System.out.print("Número de filas (1-50) o 'cancelar': ");
             String entrada = scanner.nextLine().trim();
             
             if (entrada.equalsIgnoreCase("cancelar")) {
@@ -198,7 +198,7 @@ public class Main {
         int columnas = -1;
         boolean columnasValidas = false;
         while (!columnasValidas) {
-            System.out.print("Número de columnas (1-99) o 'cancelar': ");
+            System.out.print("Número de columnas (1-50) o 'cancelar': ");
             String entrada = scanner.nextLine().trim();
             
             if (entrada.equalsIgnoreCase("cancelar")) {
