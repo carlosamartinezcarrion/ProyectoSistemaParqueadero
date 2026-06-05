@@ -185,8 +185,8 @@ public class Main {
             try {
                 filas = Integer.parseInt(entrada);
                 
-                if (filas <= 0 || filas > 26) {
-                    view.mostrarError("Las filas deben estar entre 1 y 26. Intenta de nuevo.");
+                if (filas <= 0 || filas > 50) {
+                    view.mostrarError("Las filas deben estar entre 1 y 50. Intenta de nuevo.");
                     continue;
                 }
                 filasValidas = true;
@@ -208,8 +208,8 @@ public class Main {
             try {
                 columnas = Integer.parseInt(entrada);
                 
-                if (columnas <= 0 || columnas > 99) {
-                    view.mostrarError("Las columnas deben estar entre 1 y 99. Intenta de nuevo.");
+                if (columnas <= 0 || columnas > 50) {
+                    view.mostrarError("Las columnas deben estar entre 1 y 50. Intenta de nuevo.");
                     continue;
                 }
                 columnasValidas = true;
@@ -295,8 +295,8 @@ public class Main {
         System.out.println("\n=== REGISTRAR ENTRADA ===");
         
         String placa = "";
-        boolean plaqueaValida = false;
-        while (!plaqueaValida) {
+        boolean placaValida = false;
+        while (!placaValida) {
             System.out.print("Placa del vehículo (ej: ABC123, M123, C456) o 'salir': ");
             placa = scanner.nextLine().trim();
             
@@ -308,7 +308,7 @@ public class Main {
                 view.mostrarError("La placa no puede estar vacía. Intenta de nuevo.");
                 continue;
             }
-            plaqueaValida = true;
+            placaValida = true;
         }
 
         String conductor = "";

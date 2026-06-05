@@ -1,5 +1,5 @@
 {
-  "nombreParqueadero": "PARQUEADERO CENTRAL",
+  "nombreParqueadero": "Parqueadero 41",
   "moneda": "USD",
   "tarifas": {
     "AUTOMOVIL": {
@@ -15,6 +15,6 @@
       "fraccionMinutos": 30.0
     }
   },
-  "filasDefecto": 2,
-  "columnasDefecto": 2
+  "filasDefecto": 3,
+  "columnasDefecto": 3
 }
