@@ -492,7 +492,7 @@ public class Main {
 
             if (respuesta.equals("s")) {
                 try {
-                    Ticket ticket = new Ticket(parqueadero.getNombre(), registro);
+                    Ticket ticket = new Ticket(configuracion, registro);
                     ticket.generarPDF();
                     view.mostrarTicketGenerado(ticket.getRutaArchivoPdf());
                     respuestaValida = true;

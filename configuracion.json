@@ -1,10 +1,10 @@
 {
-  "nombreParqueadero": "Parqueadero 41",
+  "nombreParqueadero": "Luis R",
   "moneda": "USD",
   "tarifas": {
     "AUTOMOVIL": {
-      "precioPorHora": 1.0,
-      "fraccionMinutos": 30.0
+      "precioPorHora": 890.0,
+      "fraccionMinutos": 5.0
     },
     "MOTO": {
       "precioPorHora": 0.5,
