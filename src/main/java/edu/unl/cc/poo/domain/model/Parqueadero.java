@@ -30,22 +30,22 @@ public class Parqueadero {
     }
 
 
-    public Registro registrarEntrada(Vehiculo vehiculo) {
-        EspacioParqueadero espacio = mapa.getPrimerEspacioLibre();
-        if (espacio == null) {
-            throw new IllegalStateException("No hay espacios disponibles en el parqueadero.");
-        }
-        return registrarEntrada(vehiculo, espacio.getFila(), espacio.getColumna());
-    }
+    public Registro registrarEntrada(Vehiculo vehiculo, Integer fila, Integer columna) {
+        EspacioParqueadero espacio;
 
+        if (fila == null || columna == null) {
+            espacio = mapa.getPrimerEspacioLibre();
+            if (espacio == null) {
+                throw new IllegalStateException("No hay espacios disponibles en el parqueadero.");
+            }
+        } else {
+            mapa.validarPosicion(fila, columna);
+            espacio = mapa.getEspacio(fila, columna);
 
-    public Registro registrarEntrada(Vehiculo vehiculo, int fila, int columna) {
-        mapa.validarPosicion(fila, columna);
-        EspacioParqueadero espacio = mapa.getEspacio(fila, columna);
-
-        if (espacio == null || !espacio.estaLibre()) {
-            throw new IllegalStateException(
-                    "El espacio (" + fila + "," + columna + ") no esta disponible.");
+            if (espacio == null || !espacio.estaLibre()) {
+                throw new IllegalStateException(
+                        "El espacio (" + fila + "," + columna + ") no esta disponible.");
+            }
         }
 
         Registro registro = new Registro(vehiculo, espacio);

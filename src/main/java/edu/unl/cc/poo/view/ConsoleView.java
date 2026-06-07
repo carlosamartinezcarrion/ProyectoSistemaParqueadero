@@ -438,7 +438,7 @@ public class ConsoleView {
 
                 registro = parqueadero.registrarEntrada(vehiculo, fila, columna - 1);
             } else {
-                registro = parqueadero.registrarEntrada(vehiculo);
+                registro = parqueadero.registrarEntrada(vehiculo, null, null);
             }
 
             mostrarRegistroEntrada(registro);
