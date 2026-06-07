@@ -33,7 +33,7 @@ public class ConsoleView {
 
     private void mostrarBienvenida() {
         System.out.println("\n╔════════════════════════════════════════════╗");
-        System.out.println("║   SISTEMA DE PARQUEADERO - VERSIÓN 1.0    ║");
+        System.out.println("║   SISTEMA DE GESTIÓN DE PARQUEADERO        ║");
         System.out.println("╚════════════════════════════════════════════╝");
         mostrarConfiguracion(configuracion);
     }
