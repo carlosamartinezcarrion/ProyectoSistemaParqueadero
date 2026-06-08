@@ -15,6 +15,6 @@
       "fraccionMinutos": 30.0
     }
   },
-  "filasDefecto": 5,
-  "columnasDefecto": 5
+  "filasDefecto": 3,
+  "columnasDefecto": 3
 }

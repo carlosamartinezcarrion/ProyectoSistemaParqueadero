@@ -16,6 +16,7 @@ public class Vehiculo {
         this.placa = placa;
         this.nombreConductor = nombreConductor;
         this.tipoEspecifico = null;
+        System.out.println("Vehiculo creado");
     }
 
 
@@ -30,6 +31,7 @@ public class Vehiculo {
     public TipoVehiculo getTipo() {
         if (tipoEspecifico != null) {
             return tipoEspecifico;
+            System.out.println("Tipo especifico: " + tipoEspecifico);
         }
         return determinarTipoPorPlaca();
     }
@@ -49,15 +51,20 @@ public class Vehiculo {
     private TipoVehiculo determinarTipoPorPlaca() {
         if (placa == null || placa.isBlank()) {
             return TipoVehiculo.AUTOMOVIL;
+            System.out.println("Placa vacia");
         }
         String upper = placa.toUpperCase();
         if (upper.startsWith("M")) return TipoVehiculo.MOTO;
         if (upper.startsWith("C")) return TipoVehiculo.CAMIONETA;
         return TipoVehiculo.AUTOMOVIL;
+        System.out.println("Tipo por placa: " + upper.charAt(0));
+
     }
 
     @Override
     public String toString() {
         return "Vehiculo{placa='" + placa + "', conductor='" + nombreConductor + "'}";
     }
+    System.out.println("Hola");
 }
+
