@@ -11,26 +11,38 @@ public class Tarifa {
     private double precioPorHora;
     private double fraccionMinutos;
 
+    /** Constructor vacío requerido por Gson. */
+    public Tarifa() {
+        this.precioPorHora = 1.0;
+        this.fraccionMinutos = 30;
+    }
+
     public Tarifa(double precioPorHora, double fraccionMinutos) {
+        validar(precioPorHora, fraccionMinutos);
+        this.precioPorHora = precioPorHora;
+        this.fraccionMinutos = fraccionMinutos;
+    }
+
+    private void validar(double precioPorHora, double fraccionMinutos) {
         if (precioPorHora <= 0) {
             throw new IllegalArgumentException("El precio por hora debe ser mayor a 0.");
         }
         if (fraccionMinutos <= 0) {
             throw new IllegalArgumentException("La fracción de minutos debe ser mayor a 0.");
         }
-        this.precioPorHora = precioPorHora;
-        this.fraccionMinutos = fraccionMinutos;
     }
 
-
+    /**
+     * Calcula el costo redondeando hacia arriba a la fracción configurada.
+     * Ejemplo: 1h a $2/h con fracción 30 min → 2 fracciones de 0.5 h = $2.
+     */
     public double calcularCostos(long minutos) {
-        if (minutos <= 0) return 0.0;
-        double horas = minutos / 60.0;
-        double costoBase = horas * precioPorHora;
-        // Aplica fraccion de minutos como incremento minimo
-        double fraccionHora = fraccionMinutos / 60.0;
-        double fracciones = Math.ceil(horas / fraccionHora);
-        return fracciones * fraccionHora * precioPorHora;
+        if (minutos <= 0) {
+            return 0.0;
+        }
+        double fracciones = Math.ceil(minutos / fraccionMinutos);
+        double costoPorFraccion = precioPorHora * (fraccionMinutos / 60.0);
+        return Math.round(fracciones * costoPorFraccion * 100.0) / 100.0;
     }
 
     public double getPrecioPorHora() {
@@ -38,6 +50,9 @@ public class Tarifa {
     }
 
     public void setPrecioPorHora(double precioPorHora) {
+        if (precioPorHora <= 0) {
+            throw new IllegalArgumentException("El precio por hora debe ser mayor a 0.");
+        }
         this.precioPorHora = precioPorHora;
     }
 
@@ -46,6 +61,9 @@ public class Tarifa {
     }
 
     public void setFraccionMinutos(double fraccionMinutos) {
+        if (fraccionMinutos <= 0) {
+            throw new IllegalArgumentException("La fracción de minutos debe ser mayor a 0.");
+        }
         this.fraccionMinutos = fraccionMinutos;
     }
 

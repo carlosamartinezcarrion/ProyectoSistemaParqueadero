@@ -163,8 +163,8 @@ public class ConfiguracionView {
         try {
             configuracion.setFilasDefecto(filas);
             configuracion.setColumnasDefecto(columnas);
-
-            parqueadero = new Parqueadero(configuracion.getNombreParqueadero(), configuracion);
+            parqueadero.setNombre(configuracion.getNombreParqueadero());
+            parqueadero.aplicarConfiguracion();
             if (guardarConfiguracionActual()) {
                 display.mostrarMensaje("✓ Dimensiones actualizadas");
                 display.mostrarMapaParqueadero(parqueadero);

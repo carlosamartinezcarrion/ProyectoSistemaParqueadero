@@ -14,12 +14,16 @@ import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import edu.unl.cc.poo.domain.model.Registro;
 import edu.unl.cc.poo.domain.model.Ticket;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
+@Named("pdfService")
+@ApplicationScoped
 public class PdfService {
 
     private static final String MONEDA = "USD";
@@ -87,13 +91,11 @@ public class PdfService {
     public void abrirPDF(String rutaArchivoPdf) {
         try {
             File archivo = new File(rutaArchivoPdf);
-            if (archivo.exists() && Desktop.isDesktopSupported()) {
+            if (archivo.exists() && Desktop.isDesktopSupported() && Desktop.isDesktopSupported()) {
                 Desktop.getDesktop().open(archivo);
-            } else {
-                System.out.println("PDF disponible en: " + rutaArchivoPdf);
             }
-        } catch (IOException e) {
-            throw new RuntimeException("No se pudo abrir el PDF: " + e.getMessage(), e);
+        } catch (Exception e) {
+            // En entorno servidor sin GUI, Desktop.open no esta disponible
         }
     }
 

@@ -44,7 +44,7 @@ public class ConsoleView {
 
     private void mostrarBienvenida() {
         System.out.println("\n╔════════════════════════════════════════════╗");
-        System.out.println("║   SISTEMA DE GESTIÓN DE PARQUEADERO        ║");
+        System.out.println("║           AutoManager - Parqueadero        ║");
         System.out.println("╚════════════════════════════════════════════╝");
         display.mostrarConfiguracion(configuracion);
     }
@@ -88,7 +88,7 @@ public class ConsoleView {
                         parqueadero = configuracionView.getParqueadero();
                     }
                     case 8 -> {
-                        System.out.println("\n¡Gracias por usar el Sistema de Parqueadero!");
+                        System.out.println("\n¡Gracias por usar AutoManager!");
                         ejecutando = false;
                     }
                     default -> display.mostrarError("Opción inválida. Selecciona entre 1 y 8. Intenta de nuevo.");

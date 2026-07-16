@@ -1,20 +1,21 @@
 {
-  "nombreParqueadero": "Parqueadero 41",
+  "nombreParqueadero": "AutoManager",
   "moneda": "USD",
+  "direccion": "Av. Principal #123 - Sector Norte",
   "tarifas": {
     "AUTOMOVIL": {
       "precioPorHora": 1.0,
       "fraccionMinutos": 30.0
     },
     "MOTO": {
-      "precioPorHora": 5.0,
-      "fraccionMinutos": 5.0
+      "precioPorHora": 0.5,
+      "fraccionMinutos": 30.0
     },
     "CAMIONETA": {
       "precioPorHora": 1.5,
       "fraccionMinutos": 30.0
     }
   },
-  "filasDefecto": 4,
-  "columnasDefecto": 4
+  "filasDefecto": 5,
+  "columnasDefecto": 10
 }
