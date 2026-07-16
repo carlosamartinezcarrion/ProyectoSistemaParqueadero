@@ -1,0 +1,369 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Configuración del Sistema - SpotMaster Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#ab0b1c",
+                    "surface-dim": "#ccdbf2",
+                    "on-primary-container": "#eeefff",
+                    "on-secondary-fixed-variant": "#005321",
+                    "on-tertiary-fixed-variant": "#930013",
+                    "primary-container": "#2563eb",
+                    "surface-container": "#e5efff",
+                    "outline-variant": "#c3c6d7",
+                    "tertiary-fixed-dim": "#ffb3ad",
+                    "surface-container-highest": "#d4e4fa",
+                    "outline": "#737686",
+                    "on-secondary-fixed": "#002109",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#dbe9ff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "tertiary-container": "#cf2c30",
+                    "on-tertiary-container": "#ffecea",
+                    "on-primary-fixed": "#00174b",
+                    "surface-container-low": "#eef4ff",
+                    "on-secondary-container": "#007432",
+                    "surface": "#f8f9ff",
+                    "background": "#f8f9ff",
+                    "secondary-fixed-dim": "#4ae176",
+                    "secondary": "#006e2f",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#dbe1ff",
+                    "on-surface": "#0d1c2d",
+                    "secondary-container": "#6bff8f",
+                    "error-container": "#ffdad6",
+                    "inverse-primary": "#b4c5ff",
+                    "on-tertiary-fixed": "#410004",
+                    "primary": "#004ac6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed": "#6bff8f",
+                    "surface-variant": "#d4e4fa",
+                    "inverse-surface": "#233143",
+                    "tertiary-fixed": "#ffdad7",
+                    "on-background": "#0d1c2d",
+                    "surface-bright": "#f8f9ff",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#0053db",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#434655",
+                    "inverse-on-surface": "#e9f1ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "2rem",
+                    "gutter": "1.5rem",
+                    "stack-lg": "1.5rem",
+                    "stack-sm": "0.5rem",
+                    "stack-md": "1rem",
+                    "sidebar-width": "260px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "stats-number": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "stats-number": ["36px", {"lineHeight": "44px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav-border {
+            border-left: 4px solid #004ac6;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-sidebar-width bg-surface-container-lowest shadow-sm flex flex-col py-6 z-50">
+<div class="px-6 mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">SpotMaster Pro</h1>
+<p class="text-on-surface-variant text-sm">Parking Admin</p>
+</div>
+<nav class="flex-grow space-y-1">
+<a class="flex items-center gap-3 text-on-surface-variant p-3 px-6 hover:bg-surface-container transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-3 px-6 hover:bg-surface-container transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">login</span>
+<span class="font-body-md">Register Entry</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-3 px-6 hover:bg-surface-container transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md">Register Exit</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-3 px-6 hover:bg-surface-container transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-body-md">Parking Map</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant p-3 px-6 hover:bg-surface-container transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-body-md">History</span>
+</a>
+<!-- Active Tab: Settings -->
+<a class="flex items-center gap-3 bg-surface-container-low text-primary border-l-4 border-primary p-3 px-6 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-6 space-y-4">
+<button class="w-full flex items-center justify-center gap-2 py-2 px-4 bg-primary text-on-primary rounded-xl font-semibold hover:opacity-90 transition-opacity active:scale-95">
+<span class="material-symbols-outlined">help</span>
+                Support
+            </button>
+
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 bg-surface border-b border-outline-variant flex justify-between items-center px-8 z-40">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container border-none rounded-full focus:ring-2 focus:ring-primary text-body-md" placeholder="Search settings..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-tertiary rounded-full"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[260px] pt-24 pb-32 px-8 min-h-screen">
+<div class="max-w-6xl mx-auto space-y-8">
+<div class="flex flex-col gap-2">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Configuración del Sistema</h2>
+<p class="text-on-surface-variant text-body-lg">Administra la información de tu establecimiento, tarifas y accesos.</p>
+</div>
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Datos del Parqueadero -->
+<section class="col-span-12 lg:col-span-7 space-y-6">
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">business</span>
+<h3 class="font-headline-md text-headline-md">Datos del Parqueadero</h3>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="col-span-2 space-y-2">
+<label class="text-label-md uppercase tracking-wider text-on-surface-variant">Nombre del establecimiento</label>
+<input class="w-full p-3 bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none transition-all" type="text" value="SpotMaster Central Plaza">
+</div>
+<div class="col-span-2 space-y-2">
+<label class="text-label-md uppercase tracking-wider text-on-surface-variant">Dirección</label>
+<input class="w-full p-3 bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none transition-all" type="text" value="Av. Principal #123 - Sector Norte">
+</div>
+<div class="space-y-2">
+<label class="text-label-md uppercase tracking-wider text-on-surface-variant">Capacidad (Filas)</label>
+<input class="w-full p-3 bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none transition-all" type="number" value="10">
+</div>
+<div class="space-y-2">
+<label class="text-label-md uppercase tracking-wider text-on-surface-variant">Capacidad (Columnas)</label>
+<input class="w-full p-3 bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none transition-all" type="number" value="15">
+</div>
+</div>
+</div>
+<!-- Gestión de Usuarios -->
+
+</section>
+<!-- Tarifas -->
+<section class="col-span-12 lg:col-span-5 space-y-6">
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant h-full">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary">payments</span>
+<h3 class="font-headline-md text-headline-md">Tarifas del Servicio</h3>
+</div>
+<div class="space-y-4">
+<!-- Automóvil -->
+<div class="p-5 bg-surface rounded-xl border border-outline-variant hover:border-primary transition-all group">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-white">
+<span class="material-symbols-outlined">directions_car</span>
+</div>
+<span class="font-bold text-lg">Automóvil</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary cursor-pointer">settings</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<label class="text-[10px] uppercase font-bold text-on-surface-variant">Precio Hora</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full pl-7 pr-3 py-2 bg-white border border-outline-variant rounded-md text-sm" type="text" value="3.500">
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] uppercase font-bold text-on-surface-variant">Fracción 15m</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full pl-7 pr-3 py-2 bg-white border border-outline-variant rounded-md text-sm" type="text" value="900">
+</div>
+</div>
+</div>
+</div>
+<!-- Moto -->
+<div class="p-5 bg-surface rounded-xl border border-outline-variant hover:border-primary transition-all group">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">two_wheeler</span>
+</div>
+<span class="font-bold text-lg">Moto</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary cursor-pointer">settings</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<label class="text-[10px] uppercase font-bold text-on-surface-variant">Precio Hora</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full pl-7 pr-3 py-2 bg-white border border-outline-variant rounded-md text-sm" type="text" value="1.800">
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] uppercase font-bold text-on-surface-variant">Fracción 15m</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full pl-7 pr-3 py-2 bg-white border border-outline-variant rounded-md text-sm" type="text" value="500">
+</div>
+</div>
+</div>
+</div>
+<!-- Camioneta -->
+<div class="p-5 bg-surface rounded-xl border border-outline-variant hover:border-primary transition-all group">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container flex items-center justify-center text-white">
+<span class="material-symbols-outlined">airport_shuttle</span>
+</div>
+<span class="font-bold text-lg">Camioneta</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary cursor-pointer">settings</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<label class="text-[10px] uppercase font-bold text-on-surface-variant">Precio Hora</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full pl-7 pr-3 py-2 bg-white border border-outline-variant rounded-md text-sm" type="text" value="5.000">
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] uppercase font-bold text-on-surface-variant">Fracción 15m</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full pl-7 pr-3 py-2 bg-white border border-outline-variant rounded-md text-sm" type="text" value="1.300">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 p-4 bg-surface-container border-l-4 border-primary rounded-r-lg">
+<p class="text-sm text-on-surface-variant leading-relaxed">
+<span class="font-bold text-primary">Nota:</span> Las tarifas se aplicarán de forma inmediata a los nuevos ingresos. Las transacciones en curso mantendrán el precio pactado al ingreso.
+                            </p>
+</div>
+</div>
+</section>
+</div>
+<!-- Action Button Area -->
+<div class="fixed bottom-8 right-8 flex items-center gap-4">
+<button class="px-6 py-3 text-on-surface-variant font-semibold hover:bg-surface-container-high rounded-xl transition-colors">
+                    Descartar
+                </button>
+<button class="flex items-center gap-2 px-8 py-3 bg-primary text-on-primary font-bold rounded-xl shadow-lg hover:shadow-xl active:scale-95 transition-all" id="saveChanges">
+<span class="material-symbols-outlined">save</span>
+                    Guardar Cambios
+                </button>
+</div>
+</div>
+</main>
+<div class="fixed bottom-10 left-1/2 -translate-x-1/2 px-6 py-3 bg-inverse-surface text-inverse-on-surface rounded-full shadow-2xl transition-all duration-300 opacity-0 translate-y-10 flex items-center gap-3 z-[100]" id="toast">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<span class="">Configuración guardada exitosamente</span>
+</div>
+<script>
+        const saveBtn = document.getElementById('saveChanges');
+        const toast = document.getElementById('toast');
+
+        saveBtn.addEventListener('click', () => {
+            // Simulated save interaction
+            saveBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Guardando...';
+            saveBtn.disabled = true;
+            
+            setTimeout(() => {
+                saveBtn.innerHTML = '<span class="material-symbols-outlined">save</span> Guardar Cambios';
+                saveBtn.disabled = false;
+                
+                toast.classList.remove('opacity-0', 'translate-y-10');
+                toast.classList.add('opacity-100', 'translate-y-0');
+                
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'translate-y-10');
+                    toast.classList.remove('opacity-100', 'translate-y-0');
+                }, 3000);
+            }, 1500);
+        });
+
+        // Interactive focus for inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('ring-2', 'ring-primary/20');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('ring-2', 'ring-primary/20');
+            });
+        });
+    </script>
+
+
+</body></html>

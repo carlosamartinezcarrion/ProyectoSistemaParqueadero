@@ -1,0 +1,422 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SpotMaster Pro - Historial de Registros</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        .sidebar-active-indicator {
+            box-shadow: inset 4px 0 0 0 currentColor;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#ab0b1c",
+                        "surface-dim": "#ccdbf2",
+                        "on-primary-container": "#eeefff",
+                        "on-secondary-fixed-variant": "#005321",
+                        "on-tertiary-fixed-variant": "#930013",
+                        "primary-container": "#2563eb",
+                        "surface-container": "#e5efff",
+                        "outline-variant": "#c3c6d7",
+                        "tertiary-fixed-dim": "#ffb3ad",
+                        "surface-container-highest": "#d4e4fa",
+                        "outline": "#737686",
+                        "on-secondary-fixed": "#002109",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#dbe9ff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "tertiary-container": "#cf2c30",
+                        "on-tertiary-container": "#ffecea",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container-low": "#eef4ff",
+                        "on-secondary-container": "#007432",
+                        "surface": "#f8f9ff",
+                        "background": "#f8f9ff",
+                        "secondary-fixed-dim": "#4ae176",
+                        "secondary": "#006e2f",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#dbe1ff",
+                        "on-surface": "#0d1c2d",
+                        "secondary-container": "#6bff8f",
+                        "error-container": "#ffdad6",
+                        "inverse-primary": "#b4c5ff",
+                        "on-tertiary-fixed": "#410004",
+                        "primary": "#004ac6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#6bff8f",
+                        "surface-variant": "#d4e4fa",
+                        "inverse-surface": "#233143",
+                        "tertiary-fixed": "#ffdad7",
+                        "on-background": "#0d1c2d",
+                        "surface-bright": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#434655",
+                        "inverse-on-surface": "#e9f1ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "2rem",
+                        "gutter": "1.5rem",
+                        "stack-lg": "1.5rem",
+                        "stack-sm": "0.5rem",
+                        "stack-md": "1rem",
+                        "sidebar-width": "260px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "stats-number": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background font-body-md text-on-background min-h-screen flex">
+<!-- SideNavBar Component -->
+<aside class="fixed left-0 top-0 h-full w-sidebar-width bg-surface-container-lowest shadow-sm flex flex-col py-6 z-50">
+<div class="px-6 mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">SpotMaster Pro</h1>
+<p class="text-on-surface-variant text-xs opacity-70">Parking Admin</p>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<!-- Nav Item 1: Dashboard -->
+<a class="flex items-center gap-3 text-on-surface-variant p-3 hover:bg-surface-container transition-colors duration-200 rounded-lg active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<!-- Nav Item 2: Register Entry -->
+<a class="flex items-center gap-3 text-on-surface-variant p-3 hover:bg-surface-container transition-colors duration-200 rounded-lg active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">login</span>
+<span class="font-body-md">Register Entry</span>
+</a>
+<!-- Nav Item 3: Register Exit -->
+<a class="flex items-center gap-3 text-on-surface-variant p-3 hover:bg-surface-container transition-colors duration-200 rounded-lg active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md">Register Exit</span>
+</a>
+<!-- Nav Item 4: Parking Map -->
+<a class="flex items-center gap-3 text-on-surface-variant p-3 hover:bg-surface-container transition-colors duration-200 rounded-lg active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-body-md">Parking Map</span>
+</a>
+<!-- Nav Item 5: History (ACTIVE) -->
+<a class="flex items-center gap-3 bg-surface-container-low text-primary border-l-4 border-primary p-3 rounded-r-lg active:scale-95 transition-transform shadow-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-body-md font-semibold">History</span>
+</a>
+<!-- Nav Item 6: Settings -->
+<a class="flex items-center gap-3 text-on-surface-variant p-3 hover:bg-surface-container transition-colors duration-200 rounded-lg active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[260px] flex-1 flex flex-col min-h-screen">
+<!-- TopNavBar Component -->
+<header class="h-16 flex justify-between items-center px-8 bg-surface border-b border-outline-variant sticky top-0 z-40">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-body-md text-on-surface" placeholder="Buscar por placa..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative p-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-tertiary rounded-full border border-surface"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">help</span>
+</button>
+
+
+</div>
+</header>
+<!-- Canvas Content -->
+<div class="p-8 space-y-8 flex-1">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="space-y-1">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Historial de Registros</h2>
+<p class="text-body-lg text-on-surface-variant max-w-2xl">Consulta y gestiona el histórico de entradas y salidas de vehículos del sistema.</p>
+</div>
+<div class="flex flex-wrap gap-3">
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant rounded-xl px-4 py-2 gap-3 shadow-sm">
+<span class="material-symbols-outlined text-primary text-lg">calendar_today</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm font-medium text-on-surface cursor-pointer" type="date" value="2023-10-27">
+<span class="text-outline">al</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm font-medium text-on-surface cursor-pointer" type="date" value="2023-11-03">
+</div>
+<button class="flex items-center gap-2 bg-primary text-on-primary px-6 py-2.5 rounded-xl font-semibold shadow-sm hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span class="">Exportar CSV</span>
+</button>
+</div>
+</div>
+<!-- Bento Layout Content: Table Card -->
+<div class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant overflow-hidden flex flex-col">
+<!-- Table Header/Filter Strip -->
+<div class="p-4 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<div class="flex gap-4">
+<select class="bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-1.5 text-sm font-medium focus:ring-2 focus:ring-primary/20">
+<option>Todos los tipos</option>
+<option>Automóvil</option>
+<option>Motocicleta</option>
+<option>Carga</option>
+</select>
+<select class="bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-1.5 text-sm font-medium focus:ring-2 focus:ring-primary/20">
+<option>Últimos 30 días</option>
+<option>Hoy</option>
+<option>Esta semana</option>
+<option>Mes anterior</option>
+</select>
+</div>
+<span class="text-label-md text-on-surface-variant px-3 py-1 bg-surface-container-highest rounded-full">1,248 Registros encontrados</span>
+</div>
+<!-- Main Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">ID</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Placa</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Conductor</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Tipo</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Entrada</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Salida</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Duración</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Total</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container/50 transition-colors cursor-default">
+<td class="px-6 py-5 text-on-surface-variant font-medium">#10294</td>
+<td class="px-6 py-5">
+<span class="inline-block px-3 py-1 bg-primary-fixed text-on-primary-fixed font-bold rounded-lg border border-primary/20">MX-452-ZB</span>
+</td>
+<td class="px-6 py-5 font-semibold text-on-surface">Roberto Jiménez</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">directions_car</span>
+<span class="text-on-surface-variant">Automóvil</span>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface-variant">03/11/2023 08:15 AM</td>
+<td class="px-6 py-5 text-on-surface-variant">03/11/2023 11:42 AM</td>
+<td class="px-6 py-5 text-on-surface-variant">3h 27m</td>
+<td class="px-6 py-5 font-bold text-on-surface text-right">$85.00</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container/50 transition-colors cursor-default">
+<td class="px-6 py-5 text-on-surface-variant font-medium">#10293</td>
+<td class="px-6 py-5">
+<span class="inline-block px-3 py-1 bg-primary-fixed text-on-primary-fixed font-bold rounded-lg border border-primary/20">ST-901-JJ</span>
+</td>
+<td class="px-6 py-5 font-semibold text-on-surface">Maria González</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">two_wheeler</span>
+<span class="text-on-surface-variant">Moto</span>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface-variant">03/11/2023 09:02 AM</td>
+<td class="px-6 py-5 text-on-surface-variant">03/11/2023 10:15 AM</td>
+<td class="px-6 py-5 text-on-surface-variant">1h 13m</td>
+<td class="px-6 py-5 font-bold text-on-surface text-right">$30.00</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container/50 transition-colors cursor-default">
+<td class="px-6 py-5 text-on-surface-variant font-medium">#10292</td>
+<td class="px-6 py-5">
+<span class="inline-block px-3 py-1 bg-primary-fixed text-on-primary-fixed font-bold rounded-lg border border-primary/20">LC-552-RT</span>
+</td>
+<td class="px-6 py-5 font-semibold text-on-surface">Transportes LogiX</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">local_shipping</span>
+<span class="text-on-surface-variant">Carga</span>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface-variant">03/11/2023 07:30 AM</td>
+<td class="px-6 py-5 text-on-surface-variant">03/11/2023 12:00 PM</td>
+<td class="px-6 py-5 text-on-surface-variant">4h 30m</td>
+<td class="px-6 py-5 font-bold text-on-surface text-right">$180.00</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container/50 transition-colors cursor-default">
+<td class="px-6 py-5 text-on-surface-variant font-medium">#10291</td>
+<td class="px-6 py-5">
+<span class="inline-block px-3 py-1 bg-primary-fixed text-on-primary-fixed font-bold rounded-lg border border-primary/20">DF-112-AS</span>
+</td>
+<td class="px-6 py-5 font-semibold text-on-surface">Carlos Slim</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">directions_car</span>
+<span class="text-on-surface-variant">Automóvil</span>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface-variant">03/11/2023 10:20 AM</td>
+<td class="px-6 py-5 text-on-surface-variant">03/11/2023 11:55 AM</td>
+<td class="px-6 py-5 text-on-surface-variant">1h 35m</td>
+<td class="px-6 py-5 font-bold text-on-surface text-right">$50.00</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container/50 transition-colors cursor-default">
+<td class="px-6 py-5 text-on-surface-variant font-medium">#10290</td>
+<td class="px-6 py-5">
+<span class="inline-block px-3 py-1 bg-primary-fixed text-on-primary-fixed font-bold rounded-lg border border-primary/20">ZZ-999-KK</span>
+</td>
+<td class="px-6 py-5 font-semibold text-on-surface">Andrea Rojas</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">directions_car</span>
+<span class="text-on-surface-variant">Automóvil</span>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface-variant">03/11/2023 11:00 AM</td>
+<td class="px-6 py-5 text-on-surface-variant">03/11/2023 12:15 PM</td>
+<td class="px-6 py-5 text-on-surface-variant">1h 15m</td>
+<td class="px-6 py-5 font-bold text-on-surface text-right">$45.00</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container/50 transition-colors cursor-default">
+<td class="px-6 py-5 text-on-surface-variant font-medium">#10289</td>
+<td class="px-6 py-5">
+<span class="inline-block px-3 py-1 bg-primary-fixed text-on-primary-fixed font-bold rounded-lg border border-primary/20">PT-222-RT</span>
+</td>
+<td class="px-6 py-5 font-semibold text-on-surface">Luis Miguel</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">directions_car</span>
+<span class="text-on-surface-variant">Automóvil</span>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface-variant">03/11/2023 06:15 AM</td>
+<td class="px-6 py-5 text-on-surface-variant">03/11/2023 09:42 AM</td>
+<td class="px-6 py-5 text-on-surface-variant">3h 27m</td>
+<td class="px-6 py-5 font-bold text-on-surface text-right">$85.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="p-6 bg-surface-container-low flex items-center justify-between border-t border-outline-variant">
+<p class="text-body-md text-on-surface-variant">Mostrando <span class="font-bold text-on-surface">1 - 6</span> de 1,248 registros</p>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold shadow-sm">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container transition-all">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container transition-all">3</button>
+<span class="px-2 text-outline-variant">...</span>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container transition-all">42</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Stats Overview Row (Bento Grid Style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-label-md text-on-surface-variant uppercase font-bold">Ingresos del Periodo</span>
+<span class="material-symbols-outlined text-secondary">payments</span>
+</div>
+<span class="text-stats-number font-stats-number text-on-surface">$12,450.00</span>
+<div class="flex items-center gap-1 text-secondary text-sm font-semibold">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="">+12% vs anterior</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-label-md text-on-surface-variant uppercase font-bold">Tiempo Promedio</span>
+<span class="material-symbols-outlined text-primary">schedule</span>
+</div>
+<span class="text-stats-number font-stats-number text-on-surface">2h 45m</span>
+<div class="flex items-center gap-1 text-on-surface-variant text-sm font-semibold">
+<span class="material-symbols-outlined text-sm">horizontal_rule</span>
+<span class="">Estable</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-label-md text-on-surface-variant uppercase font-bold">Ocupación Pico</span>
+<span class="material-symbols-outlined text-tertiary">leaderboard</span>
+</div>
+<span class="text-stats-number font-stats-number text-on-surface">92%</span>
+<div class="flex items-center gap-1 text-error text-sm font-semibold">
+<span class="material-symbols-outlined text-sm">warning</span>
+<span class="">Alta demanda</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple micro-interaction for the table rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                row.classList.toggle('bg-surface-container-low');
+            });
+        });
+
+        // Search bar animation focus
+        const searchInput = document.querySelector('input[placeholder="Buscar por placa..."]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-[1.02]');
+            searchInput.parentElement.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-[1.02]');
+        });
+    </script>
+
+
+</body></html>

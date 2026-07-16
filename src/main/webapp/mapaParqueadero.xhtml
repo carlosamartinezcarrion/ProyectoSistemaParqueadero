@@ -1,0 +1,99 @@
+<ui:composition template="/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:param name="activePage" value="mapa" />
+    <ui:define name="title">Mapa de Parqueadero - AutoManager</ui:define>
+    <ui:define name="content">
+        <section class="page-header">
+            <div style="display:flex; justify-content:space-between; align-items:end; gap:16px; flex-wrap:wrap;">
+                <div>
+                    <h2>Mapa de Parqueadero</h2>
+                    <p>Revisa la ocupación actual y administra el estado de cada espacio.</p>
+                </div>
+                <div class="filters-row">
+                    <span class="pill primary">#{mapaBean.porcentajeOcupacion} % ocupación</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="map-grid">
+            <section class="bento-card">
+                <div class="legend-row" style="margin-bottom:16px;">
+                    <span class="pill success">Libre</span>
+                    <span class="pill warning">Ocupado</span>
+                    <span class="pill">Inhabilitado</span>
+                </div>
+
+                <h:form id="mapaForm">
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <ui:repeat value="#{mapaBean.filas}" var="fila">
+                            <div class="parking-row">
+                                <div class="row-label">#{fila + 1}</div>
+                                <div class="parking-row-spots" style="display:grid; gap:8px; grid-template-columns:#{mapaBean.gridTemplateColumns};">
+                                    <ui:repeat value="#{mapaBean.espaciosPorFila[fila]}" var="espacio">
+                                        <h:commandButton value="#{espacio.etiqueta}"
+                                                         action="#{mapaBean.seleccionarEspacio(espacio.fila, espacio.columna)}"
+                                                         styleClass="spot #{espacio.estaLibre() ? 'available' : espacio.estaOcupado() ? 'occupied' : 'disabled'} #{mapaBean.filaSeleccionada eq espacio.fila and mapaBean.columnaSeleccionada eq espacio.columna ? 'selected' : ''}" />
+                                    </ui:repeat>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </h:form>
+            </section>
+
+            <aside class="bento-card">
+                <h3 class="section-title">Panel de control</h3>
+                <div class="status-list">
+                    <div class="status-item">
+                        <div>
+                            <strong>Espacio seleccionado</strong>
+                            <small>#{mapaBean.etiquetaSeleccionada} · #{mapaBean.estadoSeleccionado}</small>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <div>
+                            <strong>Libres</strong>
+                            <small>#{mapaBean.disponibles} espacios</small>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <div>
+                            <strong>Ocupados</strong>
+                            <small>#{mapaBean.ocupados} espacios</small>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <div>
+                            <strong>Inhabilitados</strong>
+                            <small>#{mapaBean.inhabilitados} espacios</small>
+                        </div>
+                    </div>
+                </div>
+
+                <h:form style="margin-top:16px;">
+                    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                        <h:commandButton value="Marcar inhabilitado" action="#{mapaBean.inhabilitarSeleccion}"
+                                         styleClass="btn btn-primary-soft" />
+                        <h:commandButton value="Liberar / Cerrar salida" action="#{mapaBean.liberarSeleccion}"
+                                         styleClass="btn btn-primary" />
+                    </div>
+                </h:form>
+
+                <div class="card mini-card" style="margin-top:16px;">
+                    <strong>Actividad reciente</strong>
+                    <div class="compact-list" style="margin-top:12px;">
+                        <ui:repeat value="#{parqueaderoService.historialReciente}" var="registro">
+                            <div class="compact-item">
+                                <h4>#{registro.vehiculo.placa}</h4>
+                                <p>#{registro.espacio.etiqueta} · #{registro.vehiculo.tipo.descripcion}</p>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </ui:define>
+</ui:composition>

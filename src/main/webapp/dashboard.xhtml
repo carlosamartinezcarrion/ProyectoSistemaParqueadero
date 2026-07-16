@@ -1,0 +1,144 @@
+<ui:composition template="/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:param name="activePage" value="dashboard" />
+    <ui:define name="title">AutoManager - Dashboard</ui:define>
+    <ui:define name="content">
+        <section class="page-header">
+            <div style="display:flex; justify-content:space-between; align-items:end; gap:16px; flex-wrap:wrap;">
+                <div>
+                    <h2>Dashboard Resumen</h2>
+                    <p>Estado actual del parqueadero #{parqueaderoService.nombreParqueadero}</p>
+                </div>
+                <div class="page-actions">
+                    <h:link outcome="/registrarEntrada.xhtml" styleClass="btn btn-primary">
+                        <span>↵</span>
+                        <span>Registrar Entrada</span>
+                    </h:link>
+                    <h:link outcome="/registrarSalida.xhtml" styleClass="btn btn-primary-soft">
+                        <span>↳</span>
+                        <span>Registrar Salida</span>
+                    </h:link>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid-metrics">
+            <ui:repeat value="#{dashboardBean.resumenEstados}" var="item">
+                <div class="card metric #{item.etiqueta eq 'Libres' ? 'secondary' : item.etiqueta eq 'Ocupados' ? 'tertiary' : item.etiqueta eq 'Inhabilitados' ? 'neutral' : item.etiqueta eq 'Capacidad' ? 'primary' : 'accent'}">
+                    <label>#{item.etiqueta}</label>
+                    <div class="status-line">
+                        <div>
+                            <div class="value">#{item.valor}</div>
+                            <div class="subvalue">#{item.etiqueta eq 'Total recaudado' ? 'USD acumulados' : 'Espacios en tiempo real'}</div>
+                        </div>
+                        <span style="font-size:24px; color:var(--primary);">#{item.icono eq 'payments' ? '$' : item.icono eq 'check_circle' ? '✓' : item.icono eq 'directions_car' ? '🚗' : item.icono eq 'block' ? '⛔' : '▦'}</span>
+                    </div>
+                </div>
+            </ui:repeat>
+        </section>
+
+        <section class="dashboard-grid">
+            <div class="bento-card chart-wrap">
+                <div class="status-line" style="margin-bottom:8px;">
+                    <div>
+                        <h3 class="section-title" style="margin-bottom:4px;">Ocupación Hoy</h3>
+                        <div class="muted">Resumen de actividad de los últimos 7 días</div>
+                    </div>
+                    <span class="pill primary">Tiempo Real</span>
+                </div>
+                <div class="chart-bars">
+                    <ui:repeat value="#{dashboardBean.ocupacionSemanal}" var="bar">
+                        <div class="chart-bar">
+                            <div class="bar" style="height: #{bar.altura}px;"></div>
+                            <div class="day">#{bar.dia}</div>
+                            <div class="muted" style="font-size:12px;">#{bar.cantidad}</div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </div>
+
+            <div class="bento-card">
+                <div class="status-line" style="margin-bottom:16px;">
+                    <div>
+                        <h3 class="section-title" style="margin-bottom:4px;">Estado General</h3>
+                        <div class="muted">Capacidad y disponibilidad</div>
+                    </div>
+                    <span class="pill success">Online</span>
+                </div>
+                <div class="compact-list">
+                    <div class="compact-item">
+                        <h4>Capacidad total</h4>
+                        <p>#{dashboardBean.capacidad} espacios</p>
+                    </div>
+                    <div class="compact-item">
+                        <h4>Ocupación</h4>
+                        <p>#{dashboardBean.porcentajeOcupacion} %</p>
+                    </div>
+                    <div class="compact-item">
+                        <h4>Registros activos</h4>
+                        <p>#{dashboardBean.registrosActivos}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard-grid" style="margin-top:24px;">
+            <div class="bento-card">
+                <div class="status-line" style="margin-bottom:16px;">
+                    <div>
+                        <h3 class="section-title" style="margin-bottom:4px;">Vista rápida del mapa</h3>
+                        <div class="muted">Ocupación actual de los primeros espacios</div>
+                    </div>
+                    <h:link outcome="/mapaParqueadero.xhtml" styleClass="pill primary">Abrir mapa</h:link>
+                </div>
+                <div style="max-height:280px; overflow-y:auto;">
+                    <div class="parking-grid columns-10">
+                        <ui:repeat value="#{mapaBean.espacios}" var="espacio">
+                            <div class="spot #{espacio.estaLibre() ? 'available' : espacio.estaOcupado() ? 'occupied' : 'disabled'}" title="#{espacio.etiqueta}">
+                                <small>#{espacio.etiqueta}</small>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-card">
+                <div class="status-line" style="margin-bottom:16px;">
+                    <div>
+                        <h3 class="section-title" style="margin-bottom:4px;">Registros recientes</h3>
+                        <div class="muted">Últimos movimientos capturados</div>
+                    </div>
+                    <h:link outcome="/historial.xhtml" styleClass="pill primary">Ver historial</h:link>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Placa</th>
+                                <th>Espacio</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{dashboardBean.ultimosRegistros}" var="registro">
+                                <tr>
+                                    <td>#{registro.id}</td>
+                                    <td>#{registro.vehiculo.placa}</td>
+                                    <td>#{registro.espacio.etiqueta}</td>
+                                    <td>
+                                        <span class="pill #{registro.estaActivo() ? 'success' : 'primary'}">
+                                            #{registro.estaActivo() ? 'Activo' : 'Cerrado'}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </ui:define>
+</ui:composition>

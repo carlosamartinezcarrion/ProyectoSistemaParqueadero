@@ -1,0 +1,83 @@
+<ui:composition template="/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:param name="activePage" value="historial" />
+    <ui:define name="title">Historial - AutoManager</ui:define>
+    <ui:define name="content">
+        <section class="page-header">
+            <div style="display:flex; justify-content:space-between; align-items:end; gap:16px; flex-wrap:wrap;">
+                <div>
+                    <h2>Historial de Registros</h2>
+                    <p>Consulta entradas, salidas y cobros realizados.</p>
+                </div>
+                <div class="page-actions"></div>
+            </div>
+        </section>
+
+        <section class="bento-card">
+            <h:form id="historialForm">
+                <div class="filters-row" style="margin-bottom:16px;">
+                    <div class="field" style="min-width:240px;">
+                        <label>Placa</label>
+                        <h:inputText value="#{historialBean.placaFiltro}" />
+                    </div>
+                    <div class="field" style="min-width:180px;">
+                        <label>Fecha</label>
+                        <p:datePicker value="#{historialBean.fechaFiltro}" showIcon="false"
+                                      placeholder="dd/MM/yyyy" dateFormat="dd/MM/yy"
+                                      styleClass="fecha-input" />
+                    </div>
+                    <div class="field" style="min-width:200px;">
+                        <label>Tipo de vehículo</label>
+                        <h:selectOneMenu value="#{historialBean.tipoFiltro}">
+                            <f:selectItem itemLabel="Todos los tipos" itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Automóvil" itemValue="AUTOMOVIL" />
+                            <f:selectItem itemLabel="Moto" itemValue="MOTO" />
+                            <f:selectItem itemLabel="Camioneta" itemValue="CAMIONETA" />
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="field" style="align-self:end;">
+                        <h:commandButton value="Filtrar" styleClass="btn btn-primary-soft" />
+                    </div>
+                    <div class="pill primary" style="align-self:end;">#{historialBean.totalEncontrados} registros</div>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Placa</th>
+                                <th>Conductor</th>
+                                <th>Tipo</th>
+                                <th>Espacio</th>
+                                <th>Entrada</th>
+                                <th>Salida</th>
+                                <th>Duración</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{historialBean.registros}" var="registro">
+                                <tr>
+                                    <td>#{registro.id}</td>
+                                    <td><span class="table-chip">#{registro.vehiculo.placa}</span></td>
+                                    <td>#{registro.vehiculo.nombreConductor}</td>
+                                    <td>#{registro.vehiculo.tipo.descripcion}</td>
+                                    <td>#{registro.espacio.etiqueta}</td>
+                                    <td>#{registro.fechaHoraEntrada}</td>
+                                    <td>#{registro.fechaHoraSalida}</td>
+                                    <td>#{registro.duracionMinutos} min</td>
+                                    <td>$#{registro.totalCobrado}</td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </div>
+            </h:form>
+        </section>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SpotMaster Pro - Parking Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#ab0b1c",
+                    "surface-dim": "#ccdbf2",
+                    "on-primary-container": "#eeefff",
+                    "on-secondary-fixed-variant": "#005321",
+                    "on-tertiary-fixed-variant": "#930013",
+                    "primary-container": "#2563eb",
+                    "surface-container": "#e5efff",
+                    "outline-variant": "#c3c6d7",
+                    "tertiary-fixed-dim": "#ffb3ad",
+                    "surface-container-highest": "#d4e4fa",
+                    "outline": "#737686",
+                    "on-secondary-fixed": "#002109",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#dbe9ff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "tertiary-container": "#cf2c30",
+                    "on-tertiary-container": "#ffecea",
+                    "on-primary-fixed": "#00174b",
+                    "surface-container-low": "#eef4ff",
+                    "on-secondary-container": "#007432",
+                    "surface": "#f8f9ff",
+                    "background": "#f8f9ff",
+                    "secondary-fixed-dim": "#4ae176",
+                    "secondary": "#006e2f",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#dbe1ff",
+                    "on-surface": "#0d1c2d",
+                    "secondary-container": "#6bff8f",
+                    "error-container": "#ffdad6",
+                    "inverse-primary": "#b4c5ff",
+                    "on-tertiary-fixed": "#410004",
+                    "primary": "#004ac6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed": "#6bff8f",
+                    "surface-variant": "#d4e4fa",
+                    "inverse-surface": "#233143",
+                    "tertiary-fixed": "#ffdad7",
+                    "on-background": "#0d1c2d",
+                    "surface-bright": "#f8f9ff",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#0053db",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#434655",
+                    "inverse-on-surface": "#e9f1ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "2rem",
+                    "gutter": "1.5rem",
+                    "stack-lg": "1.5rem",
+                    "stack-sm": "0.5rem",
+                    "stack-md": "1rem",
+                    "sidebar-width": "260px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "stats-number": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "stats-number": ["36px", {"lineHeight": "44px", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            background-color: #f8f9ff;
+            font-family: 'Inter', sans-serif;
+        }
+        .parking-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
+        }
+        .parking-spot {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        .parking-spot:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .bento-card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full w-sidebar-width bg-surface-container-lowest dark:bg-inverse-surface shadow-sm flex flex-col py-6 z-50">
+<div class="px-6 mb-10">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">SpotMaster Pro</h1>
+<p class="font-label-md text-label-md text-on-surface-variant opacity-70">Parking Admin</p>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-3">
+<a class="flex items-center gap-3 bg-surface-container-low dark:bg-surface-container-high text-primary dark:text-primary-fixed-dim border-l-4 border-primary p-3 hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined filled-icon">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-surface-variant p-3 hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">login</span>
+<span class="font-body-md text-body-md">Register Entry</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-surface-variant p-3 hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md text-body-md">Register Exit</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-surface-variant p-3 hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-body-md text-body-md">Parking Map</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-surface-variant p-3 hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-body-md text-body-md">History</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-surface-variant p-3 hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</nav>
+<div class="px-3 mt-auto flex flex-col gap-1">
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-surface-variant p-3 hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-md text-body-md">Help</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-surface-variant p-3 hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">exit_to_app</span>
+<span class="font-body-md text-body-md">Sign Out</span>
+</a>
+<div class="mt-4 px-3 py-4 bg-surface-container rounded-xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-primary-container">
+<img class="w-full h-full object-cover" data-alt="Professional portrait of a high-level parking administrator, shot in soft office lighting with a clean, tech-focused background. The individual is wearing professional attire, exuding confidence and reliability for a premium software dashboard aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRAW2Hx06-P9acx1RgwfF4JObUwd2nqJm2s6eAd80MsuPcaKRPSDojrZEbrCONairc10BmEdLahOPuDy4p_rwzUX6WtKiZPtXHHXbtWWSkogWE20EQi4wuI-o9k4cEsrjaERIr_7sThffRfZ4fXjhut8oxbgf9hlwdOKlg_sWLCk3tImdEFBgx9VO3oYQi1FD8ngQySfaGIxGhZ8PRut_3em1o5N5B4Mg-W2kMUa1f-0QaWBeemN1ilrP7rCSEAatQlzVTws-sxw"/>
+</div>
+<div class="overflow-hidden">
+<p class="font-label-md text-label-md font-bold truncate">Admin User</p>
+<p class="text-[10px] uppercase tracking-wider text-on-surface-variant">Primary Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 bg-surface dark:bg-background border-b border-outline-variant dark:border-outline flex justify-between items-center px-8 z-40">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-body-md focus:ring-2 focus:ring-primary" placeholder="Search spaces, license plates, or transactions..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-tertiary rounded-full border-2 border-white"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-8 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-3">
+<span class="font-label-md text-label-md hidden lg:block">System Online</span>
+<div class="w-2 h-2 bg-secondary rounded-full animate-pulse"></div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[260px] pt-24 pb-12 px-8 min-h-screen">
+<header class="mb-10 flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg mb-2">Dashboard Resumen</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Bienvenido de nuevo, Admin. Aquí está el estado actual del parqueadero.</p>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-xl font-label-md hover:opacity-90 active:scale-95 transition-all shadow-md">
+<span class="material-symbols-outlined">login</span>
+                    Registrar Entrada
+                </button>
+<button class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-xl font-label-md hover:opacity-90 active:scale-95 transition-all shadow-md">
+<span class="material-symbols-outlined">logout</span>
+                    Registrar Salida
+                </button>
+</div>
+</header>
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+<div class="bento-card flex flex-col justify-between border-b-4 border-primary">
+<p class="font-label-md text-label-md text-on-surface-variant mb-4">CAPACIDAD TOTAL</p>
+<div class="flex items-end justify-between">
+<span class="font-stats-number text-stats-number">100</span>
+<span class="material-symbols-outlined text-primary mb-2">view_quilt</span>
+</div>
+</div>
+<div class="bento-card flex flex-col justify-between border-b-4 border-secondary">
+<p class="font-label-md text-label-md text-on-surface-variant mb-4">ESPACIOS LIBRES</p>
+<div class="flex items-end justify-between">
+<span class="font-stats-number text-stats-number text-secondary">45</span>
+<span class="material-symbols-outlined text-secondary mb-2">check_circle</span>
+</div>
+</div>
+<div class="bento-card flex flex-col justify-between border-b-4 border-tertiary">
+<p class="font-label-md text-label-md text-on-surface-variant mb-4">OCUPADOS</p>
+<div class="flex items-end justify-between">
+<span class="font-stats-number text-stats-number text-tertiary">50</span>
+<span class="material-symbols-outlined text-tertiary mb-2">directions_car</span>
+</div>
+</div>
+<div class="bento-card flex flex-col justify-between border-b-4 border-outline">
+<p class="font-label-md text-label-md text-on-surface-variant mb-4">INHABILITADOS</p>
+<div class="flex items-end justify-between">
+<span class="font-stats-number text-stats-number opacity-50">5</span>
+<span class="material-symbols-outlined text-on-surface-variant opacity-50 mb-2">block</span>
+</div>
+</div>
+<div class="bento-card flex flex-col justify-between border-b-4 border-secondary-fixed-dim bg-secondary-container/10">
+<p class="font-label-md text-label-md text-on-surface-variant mb-4">TOTAL RECAUDADO</p>
+<div class="flex items-end justify-between">
+<span class="font-stats-number text-stats-number">$1,250</span>
+<span class="material-symbols-outlined text-secondary mb-2">payments</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Occupancy Chart -->
+<div class="lg:col-span-2 bento-card relative overflow-hidden h-[400px]">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md">Ocupación Hoy</h3>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container rounded-full text-label-md font-semibold">Tiempo Real</span>
+</div>
+</div>
+<div class="relative w-full h-64 flex items-end justify-between px-4">
+<!-- Simple Bar Chart Representation -->
+<div class="w-8 bg-primary/20 rounded-t-lg h-[40%] transition-all hover:bg-primary/40 group relative">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 font-label-md opacity-0 group-hover:opacity-100 transition-opacity">08:00</span>
+</div>
+<div class="w-8 bg-primary/30 rounded-t-lg h-[60%] transition-all hover:bg-primary/50 group relative">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 font-label-md opacity-0 group-hover:opacity-100 transition-opacity">10:00</span>
+</div>
+<div class="w-8 bg-primary/60 rounded-t-lg h-[85%] transition-all hover:bg-primary group relative">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 font-label-md opacity-0 group-hover:opacity-100 transition-opacity">12:00</span>
+</div>
+<div class="w-8 bg-primary/70 rounded-t-lg h-[95%] transition-all hover:bg-primary group relative">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 font-label-md opacity-0 group-hover:opacity-100 transition-opacity">14:00</span>
+</div>
+<div class="w-8 bg-primary/50 rounded-t-lg h-[75%] transition-all hover:bg-primary/70 group relative">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 font-label-md opacity-0 group-hover:opacity-100 transition-opacity">16:00</span>
+</div>
+<div class="w-8 bg-primary/40 rounded-t-lg h-[55%] transition-all hover:bg-primary/60 group relative">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 font-label-md opacity-0 group-hover:opacity-100 transition-opacity">18:00</span>
+</div>
+<div class="w-8 bg-primary/20 rounded-t-lg h-[30%] transition-all hover:bg-primary/40 group relative">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 font-label-md opacity-0 group-hover:opacity-100 transition-opacity">20:00</span>
+</div>
+</div>
+<div class="mt-8 grid grid-cols-7 text-center font-label-md text-on-surface-variant">
+<div>08:00</div>
+<div>10:00</div>
+<div>12:00</div>
+<div>14:00</div>
+<div>16:00</div>
+<div>18:00</div>
+<div>20:00</div>
+</div>
+</div>
+<!-- Parking Mini Map -->
+<div class="bento-card h-[400px] flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-headline-md text-headline-md">Vista Rápida Mapa</h3>
+<a class="text-primary font-label-md hover:underline" href="#">Ver mapa completo</a>
+</div>
+<div class="parking-grid bg-surface-container rounded-xl p-3 flex-1 overflow-auto">
+<!-- Spot Generation -->
+<script>
+                        const grid = document.currentScript.parentElement;
+                        for(let i=0; i<100; i++) {
+                            const spot = document.createElement('div');
+                            spot.className = 'parking-spot';
+                            
+                            // Mocking logic: Green=Available, Red=Occupied, Grey=Disabled
+                            const rand = Math.random();
+                            if(rand < 0.45) {
+                                spot.classList.add('bg-secondary/10', 'border', 'border-secondary/30');
+                            } else if(rand < 0.95) {
+                                spot.classList.add('bg-tertiary/10', 'border', 'border-tertiary/30');
+                            } else {
+                                spot.classList.add('bg-outline/20', 'border', 'border-outline/40');
+                            }
+                            grid.appendChild(spot);
+                        }
+                    </script>
+</div>
+<div class="mt-4 flex gap-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+<div class="flex items-center gap-1">
+<span class="w-3 h-3 bg-secondary/20 border border-secondary/40 rounded-sm"></span> Libre
+                    </div>
+<div class="flex items-center gap-1">
+<span class="w-3 h-3 bg-tertiary/20 border border-tertiary/40 rounded-sm"></span> Ocupado
+                    </div>
+<div class="flex items-center gap-1">
+<span class="w-3 h-3 bg-outline/30 border border-outline/50 rounded-sm"></span> Inhab.
+                    </div>
+</div>
+</div>
+</div>
+<!-- Recent Transactions Table Section -->
+<section class="mt-8 bento-card">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md">Registros Recientes</h3>
+<button class="text-primary font-label-md px-4 py-2 hover:bg-primary-container/10 rounded-lg transition-colors">Ver Todo el Historial</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant border-b border-outline-variant">
+<th class="px-4 py-3 font-label-md">PLACA</th>
+<th class="px-4 py-3 font-label-md">ESPACIO</th>
+<th class="px-4 py-3 font-label-md">ENTRADA</th>
+<th class="px-4 py-3 font-label-md">ESTADO</th>
+<th class="px-4 py-3 font-label-md">TARIFA EST.</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-4 py-4 font-body-md font-bold">ABC-1234</td>
+<td class="px-4 py-4 font-body-md">A-12</td>
+<td class="px-4 py-4 font-body-md text-on-surface-variant">10:45 AM</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-bold">ACTIVO</span>
+</td>
+<td class="px-4 py-4 font-body-md">$15.00</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-4 py-4 font-body-md font-bold">XYZ-9876</td>
+<td class="px-4 py-4 font-body-md">B-05</td>
+<td class="px-4 py-4 font-body-md text-on-surface-variant">09:30 AM</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-bold">ACTIVO</span>
+</td>
+<td class="px-4 py-4 font-body-md">$28.00</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-4 py-4 font-body-md font-bold">GHI-4567</td>
+<td class="px-4 py-4 font-body-md">C-22</td>
+<td class="px-4 py-4 font-body-md text-on-surface-variant">08:15 AM</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-surface-container-highest text-on-surface-variant rounded-full text-[10px] font-bold">FINALIZADO</span>
+</td>
+<td class="px-4 py-4 font-body-md">$45.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<script>
+        // Micro-interactions for dashboard elements
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+                card.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

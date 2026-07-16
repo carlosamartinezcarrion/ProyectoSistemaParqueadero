@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      class="light" lang="es">
+<h:head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><ui:insert name="title">AutoManager</ui:insert></title>
+    <h:outputStylesheet library="css" name="app.css" />
+</h:head>
+<h:body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <h1>#{parqueaderoService.parqueadero.configuracion.nombreParqueadero}</h1>
+                <p>Gestión de Parqueadero</p>
+            </div>
+
+            <nav class="nav">
+                <h:link outcome="/index.xhtml" styleClass="#{activePage eq 'dashboard' ? 'nav-link active' : 'nav-link'}">
+                    <span class="nav-icon">⌂</span><span>Dashboard</span>
+                </h:link>
+                <h:link outcome="/registrarEntrada.xhtml" styleClass="#{activePage eq 'entrada' ? 'nav-link active' : 'nav-link'}">
+                    <span class="nav-icon">↵</span><span>Registrar Entrada</span>
+                </h:link>
+                <h:link outcome="/registrarSalida.xhtml" styleClass="#{activePage eq 'salida' ? 'nav-link active' : 'nav-link'}">
+                    <span class="nav-icon">↳</span><span>Registrar Salida</span>
+                </h:link>
+                <h:link outcome="/mapaParqueadero.xhtml" styleClass="#{activePage eq 'mapa' ? 'nav-link active' : 'nav-link'}">
+                    <span class="nav-icon">▦</span><span>Mapa de Parqueadero</span>
+                </h:link>
+                <h:link outcome="/historial.xhtml" styleClass="#{activePage eq 'historial' ? 'nav-link active' : 'nav-link'}">
+                    <span class="nav-icon">☰</span><span>Historial</span>
+                </h:link>
+                <h:link outcome="/configuracion.xhtml" styleClass="#{activePage eq 'configuracion' ? 'nav-link active' : 'nav-link'}">
+                    <span class="nav-icon">⚙</span><span>Configuración</span>
+                </h:link>
+            </nav>
+        </aside>
+
+        <header class="topbar">
+            <div></div>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <span class="status-dot"></span>
+                <span class="muted" style="font-size:12px; font-weight:700;">Sistema Online</span>
+            </div>
+        </header>
+
+        <main class="content">
+            <div class="page">
+                <h:messages id="globalMessages" globalOnly="true" layout="list" styleClass="messages" />
+                <ui:insert name="content" />
+            </div>
+        </main>
+    </div>
+</h:body>
+</html>
