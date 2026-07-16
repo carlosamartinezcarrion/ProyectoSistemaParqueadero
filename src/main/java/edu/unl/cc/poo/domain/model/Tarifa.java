@@ -12,6 +12,12 @@ public class Tarifa {
     private double fraccionMinutos;
 
     public Tarifa(double precioPorHora, double fraccionMinutos) {
+        if (precioPorHora <= 0) {
+            throw new IllegalArgumentException("El precio por hora debe ser mayor a 0.");
+        }
+        if (fraccionMinutos <= 0) {
+            throw new IllegalArgumentException("La fracción de minutos debe ser mayor a 0.");
+        }
         this.precioPorHora = precioPorHora;
         this.fraccionMinutos = fraccionMinutos;
     }

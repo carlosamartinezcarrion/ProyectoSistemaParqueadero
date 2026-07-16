@@ -14,6 +14,12 @@ public class Vehiculo {
     private TipoVehiculo tipoEspecifico;
 
     public Vehiculo(String placa, String nombreConductor) {
+        if (placa == null || placa.isBlank()) {
+            throw new IllegalArgumentException("La placa del vehículo no puede estar vacía.");
+        }
+        if (nombreConductor == null || nombreConductor.isBlank()) {
+            throw new IllegalArgumentException("El nombre del conductor no puede estar vacío.");
+        }
         this.placa = placa;
         this.nombreConductor = nombreConductor;
         this.tipoEspecifico = null;

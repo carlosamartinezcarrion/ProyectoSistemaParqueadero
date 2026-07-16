@@ -7,14 +7,14 @@
       "fraccionMinutos": 30.0
     },
     "MOTO": {
-      "precioPorHora": 0.5,
-      "fraccionMinutos": 30.0
+      "precioPorHora": 5.0,
+      "fraccionMinutos": 5.0
     },
     "CAMIONETA": {
       "precioPorHora": 1.5,
       "fraccionMinutos": 30.0
     }
   },
-  "filasDefecto": 3,
-  "columnasDefecto": 3
+  "filasDefecto": 4,
+  "columnasDefecto": 4
 }

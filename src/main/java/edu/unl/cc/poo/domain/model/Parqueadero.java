@@ -42,7 +42,7 @@ public class Parqueadero {
             mapa.validarPosicion(fila, columna);
             espacio = mapa.getEspacio(fila, columna);
 
-            if (espacio == null || !espacio.estaLibre()) {
+            if (!espacio.estaLibre()) {
                 throw new IllegalStateException(
                         "El espacio (" + fila + "," + columna + ") no esta disponible.");
             }
@@ -78,9 +78,6 @@ public class Parqueadero {
     public void setEstadoEspacio(int fila, int columna, EstadoEspacio estado) {
         mapa.validarPosicion(fila, columna);
         EspacioParqueadero espacio = mapa.getEspacio(fila, columna);
-        if (espacio == null) {
-            throw new IllegalStateException("No se encontro el espacio solicitado.");
-        }
         if (estado == null) {
             throw new IllegalArgumentException("El estado no puede ser nulo.");
         }

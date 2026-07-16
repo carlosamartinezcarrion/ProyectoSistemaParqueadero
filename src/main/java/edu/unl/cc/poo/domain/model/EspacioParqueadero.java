@@ -48,12 +48,20 @@ public class EspacioParqueadero {
 
 
     public void ocupar(String idRegistro) {
+        if (!estaLibre()) {
+            throw new IllegalStateException(
+                    "El espacio " + getEtiqueta() + " no está libre y no puede ser ocupado.");
+        }
         this.estado = EstadoEspacio.OCUPADO;
         this.idRegistroActivo = idRegistro;
     }
 
 
     public void liberar() {
+        if (!estaOcupado()) {
+            throw new IllegalStateException(
+                    "El espacio " + getEtiqueta() + " no está ocupado y no puede ser liberado.");
+        }
         this.estado = EstadoEspacio.LIBRE;
         this.idRegistroActivo = null;
     }

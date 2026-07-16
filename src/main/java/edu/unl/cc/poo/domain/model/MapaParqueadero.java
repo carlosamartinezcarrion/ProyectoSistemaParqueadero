@@ -26,7 +26,8 @@ public class MapaParqueadero {
         return espacios.stream()
                 .filter(e -> e.getFila() == fila && e.getColumna() == columna)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "No existe un espacio en la posición (" + fila + ", " + columna + ")."));
     }
 
 

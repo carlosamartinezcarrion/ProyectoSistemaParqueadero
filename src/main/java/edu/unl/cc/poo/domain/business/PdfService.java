@@ -80,7 +80,7 @@ public class PdfService {
                     .setFontColor(ColorConstants.GRAY));
 
         } catch (IOException e) {
-            System.err.println("Error al generar PDF: " + e.getMessage());
+            throw new RuntimeException("Error al generar PDF: " + e.getMessage(), e);
         }
     }
 
@@ -93,7 +93,7 @@ public class PdfService {
                 System.out.println("PDF disponible en: " + rutaArchivoPdf);
             }
         } catch (IOException e) {
-            System.err.println("No se pudo abrir el PDF: " + e.getMessage());
+            throw new RuntimeException("No se pudo abrir el PDF: " + e.getMessage(), e);
         }
     }
 
@@ -107,8 +107,7 @@ public class PdfService {
         return centrar("Gracias por usar " + nombreParqueadero, 60);
     }
 
-    private void agregarFila(Table tabla, PdfFont fontBold, PdfFont font,
-                             String etiqueta, String valor) {
+    private void agregarFila(Table tabla, PdfFont fontBold, PdfFont font, String etiqueta, String valor) {
         tabla.addCell(new Cell().add(new Paragraph(etiqueta).setFont(fontBold).setFontSize(11)));
         tabla.addCell(new Cell().add(new Paragraph(valor).setFont(font).setFontSize(11)));
     }
