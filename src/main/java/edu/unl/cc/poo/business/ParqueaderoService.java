@@ -1,4 +1,4 @@
-package edu.unl.cc.poo.domain.business;
+package edu.unl.cc.poo.business;
 
 import edu.unl.cc.poo.domain.enums.EstadoEspacio;
 import edu.unl.cc.poo.domain.model.*;

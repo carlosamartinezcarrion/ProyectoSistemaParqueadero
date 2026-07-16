@@ -1,4 +1,4 @@
-package edu.unl.cc.poo.domain.business;
+package edu.unl.cc.poo.business;
 
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.colors.ColorConstants;
