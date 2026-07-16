@@ -1,4 +1,4 @@
-package edu.unl.cc.poo.view;
+package edu.unl.cc.poo.view.BeanViews;
 
 import edu.unl.cc.poo.domain.business.ParqueaderoService;
 import edu.unl.cc.poo.domain.model.Registro;
@@ -10,10 +10,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Named("dashboardBean")

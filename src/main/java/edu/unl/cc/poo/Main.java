@@ -3,7 +3,7 @@ package edu.unl.cc.poo;
 import edu.unl.cc.poo.domain.business.PdfService;
 import edu.unl.cc.poo.domain.model.Configuracion;
 import edu.unl.cc.poo.domain.model.Parqueadero;
-import edu.unl.cc.poo.view.*;
+import edu.unl.cc.poo.view.ConsoleViews.ConsoleView;
 
 public class Main {
 

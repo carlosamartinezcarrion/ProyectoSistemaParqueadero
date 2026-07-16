@@ -1,9 +1,10 @@
-package edu.unl.cc.poo.view;
+package edu.unl.cc.poo.view.ConsoleViews;
 
 import edu.unl.cc.poo.domain.model.*;
 import edu.unl.cc.poo.domain.enums.TipoVehiculo;
 import edu.unl.cc.poo.domain.enums.EstadoEspacio;
 import edu.unl.cc.poo.domain.business.PdfService;
+
 import java.util.regex.Pattern;
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package edu.unl.cc.poo.view;
+package edu.unl.cc.poo.view.BeanViews;
 
 import edu.unl.cc.poo.domain.business.ParqueaderoService;
 import edu.unl.cc.poo.domain.enums.EstadoEspacio;

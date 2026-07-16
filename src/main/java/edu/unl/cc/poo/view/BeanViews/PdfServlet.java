@@ -1,4 +1,4 @@
-package edu.unl.cc.poo.view;
+package edu.unl.cc.poo.view.BeanViews;
 
 import edu.unl.cc.poo.domain.model.Ticket;
 import jakarta.servlet.ServletException;
@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Path;
 
 public class PdfServlet extends HttpServlet {
 

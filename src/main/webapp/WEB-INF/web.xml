@@ -27,7 +27,7 @@
 
     <servlet>
         <servlet-name>PdfServlet</servlet-name>
-        <servlet-class>edu.unl.cc.poo.view.PdfServlet</servlet-class>
+        <servlet-class>edu.unl.cc.poo.view.BeanViews.PdfServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

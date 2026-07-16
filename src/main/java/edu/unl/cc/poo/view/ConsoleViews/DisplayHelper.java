@@ -1,4 +1,4 @@
-package edu.unl.cc.poo.view;
+package edu.unl.cc.poo.view.ConsoleViews;
 
 import edu.unl.cc.poo.domain.model.*;
 import edu.unl.cc.poo.domain.enums.TipoVehiculo;
