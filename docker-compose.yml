@@ -1,0 +1,55 @@
+services:
+
+  Parqueadero-db:
+    image: postgres:${POSTGRES_VERSION}
+    restart: unless-stopped
+    container_name: Parqueadero-pg-db-container
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PGSQL_PORT_PUBLIC}:5432
+    volumes:
+      - Parqueadero-pg-data:/var/lib/postgresql
+    networks:
+      Parqueadero-pg-network:
+        ipv4_address: 172.21.0.251
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  Parqueadero-view-pgadmin4:
+    container_name: Parqueadero-pgadmin4-container
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "adminDB@postgres.org"
+      PGADMIN_DEFAULT_PASSWORD: "admin123"
+    ports:
+      - 81:80
+    depends_on:
+      - Parqueadero-db
+    networks:
+      Parqueadero-pg-network:
+        ipv4_address: 172.21.0.254
+
+networks:
+  Parqueadero-pg-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.21.0.0/24
+
+volumes:
+  Parqueadero-pg-data:
+    name: Parqueadero-pg-data-local
+    driver: local
+    driver_opts:
+      type: none
+      device: ${LOCAL_DATA_DIR_BD}
+      o: bind

@@ -8,4 +8,43 @@
     <keyStore id="defaultKeyStore" password="password" />
     <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443" />
     <webApplication location="Sistema-Parqueadero-App.war" contextRoot="/"/>
+
+    <!-- Configuración de salidas de log del server -->
+    <!-- Configuración de logging -->
+    <logging
+            consoleFormat="SIMPLE"
+            consoleLogLevel="INFO"
+            messageFormat="SIMPLE"
+            messageSource="message,trace,accessLog"
+            isoDateFormat="true"
+            maxFileSize="100"
+            maxFiles="5"
+            traceSpecification="*=info:unl.edu.*=fine,eclipselink.sql=all"
+    />
+
+    <variable name="db.host"     defaultValue="localhost"      envVarName="DB_HOST"/>
+    <variable name="db.port"     defaultValue="5434"           envVarName="DB_PORT"/>
+    <variable name="db.name"     defaultValue="parqueadero"          envVarName="DB_NAME"/>
+    <variable name="db.user"     defaultValue="parqueadero234"      envVarName="DB_USER"/>
+    <variable name="db.password" defaultValue="par567"  envVarName="DB_PASSWORD"/>
+
+    <library id="postgresLib">
+        <fileset dir="${shared.resource.dir}/postgres/" include="postgresql-*.jar"/>
+    </library>
+
+    <dataSource id="parqueaderoDS"
+                jndiName="jdbc/parqueaderoDS"
+                type="javax.sql.ConnectionPoolDataSource">
+        <jdbcDriver libraryRef="postgresLib"/>
+        <properties.postgresql
+                url="jdbc:postgresql://${db.host}:${db.port}/${db.name}?stringtype=unspecified"
+                user="${db.user}"
+                password="${db.password}"/>
+        <connectionManager
+                minPoolSize="2"
+                maxPoolSize="20"
+                connectionTimeout="30s"
+                maxIdleTime="10m"/>
+    </dataSource>
+
 </server>
