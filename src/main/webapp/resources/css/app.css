@@ -227,32 +227,45 @@ textarea {
 }
 
 .btn:disabled,
-.btn[disabled] {
-    background: #c1c7d0;
-    color: #8993a4;
-    cursor: not-allowed;
-    opacity: .6;
+.btn[disabled],
+input.btn:disabled,
+button.btn:disabled {
+    background: #c1c7d0 !important;
+    color: #8993a4 !important;
+    cursor: not-allowed !important;
+    opacity: .6 !important;
 }
 
-.btn-primary {
-    background: var(--primary);
-    color: white;
+.btn-primary,
+input.btn-primary,
+button.btn-primary {
+    background: var(--primary) !important;
+    color: white !important;
+    border-color: transparent !important;
 }
 
-.btn-primary-soft {
-    background: var(--primary-soft);
-    color: var(--primary);
+.btn-primary-soft,
+input.btn-primary-soft,
+button.btn-primary-soft {
+    background: var(--primary-soft) !important;
+    color: var(--primary) !important;
+    border-color: transparent !important;
 }
 
-.btn-ghost {
-    background: transparent;
-    color: var(--muted);
-    border: 1px solid var(--outline);
+.btn-ghost,
+input.btn-ghost,
+button.btn-ghost {
+    background: transparent !important;
+    color: var(--muted) !important;
+    border: 1px solid var(--outline) !important;
 }
 
-.btn-success {
-    background: var(--secondary);
-    color: white;
+.btn-success,
+input.btn-success,
+button.btn-success {
+    background: var(--secondary) !important;
+    color: white !important;
+    border-color: transparent !important;
 }
 
 .card {

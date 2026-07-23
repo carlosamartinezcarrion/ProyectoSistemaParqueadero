@@ -7,7 +7,7 @@
     </basicRegistry>
     <keyStore id="defaultKeyStore" password="password" />
     <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443" />
-    <webApplication location="Sistema-Parqueadero-App.war" contextRoot="/"/>
+    <webApplication location="ProyectoSistemaParqueadero-1.0-SNAPSHOT.war" contextRoot="/"/>
 
     <!-- Configuración de salidas de log del server -->
     <!-- Configuración de logging -->
