@@ -1,6 +1,6 @@
-package edu.unl.cc.poo.view.BeanViews;
+package edu.unl.cc.poo.view.registration;
 
-import edu.unl.cc.poo.domain.model.Ticket;
+import edu.unl.cc.poo.domain.Ticket;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

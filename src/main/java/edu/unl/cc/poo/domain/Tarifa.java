@@ -1,4 +1,4 @@
-package edu.unl.cc.poo.domain.model;
+package edu.unl.cc.poo.domain;
 
 /**
  * Define el precio por hora y la fraccion de minutos aplicable

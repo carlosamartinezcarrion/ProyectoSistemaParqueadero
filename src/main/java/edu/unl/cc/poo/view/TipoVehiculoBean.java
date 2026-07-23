@@ -1,4 +1,4 @@
-package edu.unl.cc.poo.view.BeanViews;
+package edu.unl.cc.poo.view;
 
 import edu.unl.cc.poo.domain.enums.TipoVehiculo;
 import jakarta.enterprise.context.ApplicationScoped;

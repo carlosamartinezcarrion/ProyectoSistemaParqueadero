@@ -1,9 +1,9 @@
-package edu.unl.cc.poo.view.BeanViews;
+package edu.unl.cc.poo.view.core;
 
-import edu.unl.cc.poo.business.ParqueaderoService;
+import edu.unl.cc.poo.business.core.ParqueaderoService;
 import edu.unl.cc.poo.domain.enums.EstadoEspacio;
-import edu.unl.cc.poo.domain.model.EspacioParqueadero;
-import edu.unl.cc.poo.domain.model.Registro;
+import edu.unl.cc.poo.domain.EspacioParqueadero;
+import edu.unl.cc.poo.domain.Registro;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;

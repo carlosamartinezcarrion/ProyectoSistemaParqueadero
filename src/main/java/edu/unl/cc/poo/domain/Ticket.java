@@ -1,4 +1,4 @@
-package edu.unl.cc.poo.domain.model;
+package edu.unl.cc.poo.domain;
 
 import java.io.IOException;
 import java.nio.file.Files;

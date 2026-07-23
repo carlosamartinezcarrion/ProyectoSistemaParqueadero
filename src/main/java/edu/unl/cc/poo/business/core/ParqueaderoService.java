@@ -1,7 +1,10 @@
-package edu.unl.cc.poo.business;
+package edu.unl.cc.poo.business.core;
 
+import edu.unl.cc.poo.domain.Configuracion;
+import edu.unl.cc.poo.domain.Parqueadero;
+import edu.unl.cc.poo.domain.Registro;
+import edu.unl.cc.poo.domain.Vehiculo;
 import edu.unl.cc.poo.domain.enums.EstadoEspacio;
-import edu.unl.cc.poo.domain.model.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;

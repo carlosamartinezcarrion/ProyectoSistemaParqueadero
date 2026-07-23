@@ -1,4 +1,4 @@
-package edu.unl.cc.poo.business;
+package edu.unl.cc.poo.business.core;
 
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.colors.ColorConstants;
@@ -12,8 +12,8 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
-import edu.unl.cc.poo.domain.model.Registro;
-import edu.unl.cc.poo.domain.model.Ticket;
+import edu.unl.cc.poo.domain.Registro;
+import edu.unl.cc.poo.domain.Ticket;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 

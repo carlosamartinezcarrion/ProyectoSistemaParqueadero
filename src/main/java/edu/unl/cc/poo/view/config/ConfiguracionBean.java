@@ -1,9 +1,9 @@
 package edu.unl.cc.poo.view.BeanViews;
 
-import edu.unl.cc.poo.business.ParqueaderoService;
+import edu.unl.cc.poo.business.core.ParqueaderoService;
 import edu.unl.cc.poo.domain.enums.TipoVehiculo;
-import edu.unl.cc.poo.domain.model.Configuracion;
-import edu.unl.cc.poo.domain.model.Tarifa;
+import edu.unl.cc.poo.domain.Configuracion;
+import edu.unl.cc.poo.domain.Tarifa;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;

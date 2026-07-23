@@ -1,10 +1,10 @@
-package edu.unl.cc.poo.view.BeanViews;
+package edu.unl.cc.poo.view.registration;
 
-import edu.unl.cc.poo.business.ParqueaderoService;
-import edu.unl.cc.poo.business.PdfService;
-import edu.unl.cc.poo.domain.model.Registro;
-import edu.unl.cc.poo.domain.model.Ticket;
-import edu.unl.cc.poo.domain.model.Vehiculo;
+import edu.unl.cc.poo.business.core.ParqueaderoService;
+import edu.unl.cc.poo.business.core.PdfService;
+import edu.unl.cc.poo.domain.Registro;
+import edu.unl.cc.poo.domain.Ticket;
+import edu.unl.cc.poo.domain.Vehiculo;
 import edu.unl.cc.poo.domain.enums.TipoVehiculo;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;

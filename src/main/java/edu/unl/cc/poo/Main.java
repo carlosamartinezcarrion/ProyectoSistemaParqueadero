@@ -1,9 +1,9 @@
 package edu.unl.cc.poo;
 
-import edu.unl.cc.poo.business.PdfService;
-import edu.unl.cc.poo.domain.model.Configuracion;
-import edu.unl.cc.poo.domain.model.Parqueadero;
-import edu.unl.cc.poo.view.ConsoleViews.ConsoleView;
+import edu.unl.cc.poo.business.core.PdfService;
+import edu.unl.cc.poo.domain.Configuracion;
+import edu.unl.cc.poo.domain.Parqueadero;
+import edu.unl.cc.poo.view.Console.ConsoleView;
 
 public class Main {
 

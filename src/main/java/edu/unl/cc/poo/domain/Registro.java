@@ -1,4 +1,4 @@
-package edu.unl.cc.poo.domain.model;
+package edu.unl.cc.poo.domain;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

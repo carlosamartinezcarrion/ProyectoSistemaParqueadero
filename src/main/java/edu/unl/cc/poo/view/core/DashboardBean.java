@@ -1,7 +1,7 @@
-package edu.unl.cc.poo.view.BeanViews;
+package edu.unl.cc.poo.view.core;
 
-import edu.unl.cc.poo.business.ParqueaderoService;
-import edu.unl.cc.poo.domain.model.Registro;
+import edu.unl.cc.poo.business.core.ParqueaderoService;
+import edu.unl.cc.poo.domain.Registro;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
