@@ -9,7 +9,7 @@
             <div style="display:flex; justify-content:space-between; align-items:end; gap:16px; flex-wrap:wrap;">
                 <div>
                     <h2>Dashboard Resumen</h2>
-                    <p>Estado actual del parqueadero #{parqueaderoService.nombreParqueadero}</p>
+                    <p>Estado actual del parqueadero #{dashboardController.nombreParqueadero}</p>
                 </div>
                 <div class="page-actions">
                     <h:link outcome="/registrarEntrada.xhtml" styleClass="btn btn-primary">
@@ -25,7 +25,7 @@
         </section>
 
         <section class="grid-metrics">
-            <ui:repeat value="#{dashboardBean.resumenEstados}" var="item">
+            <ui:repeat value="#{dashboardController.resumenEstados}" var="item">
                 <div class="card metric #{item.etiqueta eq 'Libres' ? 'secondary' : item.etiqueta eq 'Ocupados' ? 'tertiary' : item.etiqueta eq 'Inhabilitados' ? 'neutral' : item.etiqueta eq 'Capacidad' ? 'primary' : 'accent'}">
                     <label>#{item.etiqueta}</label>
                     <div class="status-line">
@@ -49,7 +49,7 @@
                     <span class="pill primary">Tiempo Real</span>
                 </div>
                 <div class="chart-bars">
-                    <ui:repeat value="#{dashboardBean.ocupacionSemanal}" var="bar">
+                    <ui:repeat value="#{dashboardController.ocupacionSemanal}" var="bar">
                         <div class="chart-bar">
                             <div class="bar" style="height: #{bar.altura}px;"></div>
                             <div class="day">#{bar.dia}</div>
@@ -70,15 +70,15 @@
                 <div class="compact-list">
                     <div class="compact-item">
                         <h4>Capacidad total</h4>
-                        <p>#{dashboardBean.capacidad} espacios</p>
+                        <p>#{dashboardController.capacidad} espacios</p>
                     </div>
                     <div class="compact-item">
                         <h4>Ocupación</h4>
-                        <p>#{dashboardBean.porcentajeOcupacion} %</p>
+                        <p>#{dashboardController.porcentajeOcupacion} %</p>
                     </div>
                     <div class="compact-item">
                         <h4>Registros activos</h4>
-                        <p>#{dashboardBean.registrosActivos}</p>
+                        <p>#{dashboardController.registrosActivos}</p>
                     </div>
                 </div>
             </div>
@@ -95,7 +95,7 @@
                 </div>
                 <div style="max-height:280px; overflow-y:auto;">
                     <div class="parking-grid columns-10">
-                        <ui:repeat value="#{mapaBean.espacios}" var="espacio">
+                        <ui:repeat value="#{mapaController.espacios}" var="espacio">
                             <div class="spot #{espacio.estaLibre() ? 'available' : espacio.estaOcupado() ? 'occupied' : 'disabled'}" title="#{espacio.etiqueta}">
                                 <small>#{espacio.etiqueta}</small>
                             </div>
@@ -115,26 +115,26 @@
                 <div class="table-wrap">
                     <table>
                         <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Placa</th>
-                                <th>Espacio</th>
-                                <th>Estado</th>
-                            </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Placa</th>
+                            <th>Espacio</th>
+                            <th>Estado</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <ui:repeat value="#{dashboardBean.ultimosRegistros}" var="registro">
-                                <tr>
-                                    <td>#{registro.id}</td>
-                                    <td>#{registro.vehiculo.placa}</td>
-                                    <td>#{registro.espacio.etiqueta}</td>
-                                    <td>
+                        <ui:repeat value="#{dashboardController.ultimosRegistros}" var="registro">
+                            <tr>
+                                <td>#{registro.uuid}</td>
+                                <td>#{registro.vehiculo.placa}</td>
+                                <td>#{registro.espacio.etiqueta}</td>
+                                <td>
                                         <span class="pill #{registro.estaActivo() ? 'success' : 'primary'}">
                                             #{registro.estaActivo() ? 'Activo' : 'Cerrado'}
                                         </span>
-                                    </td>
-                                </tr>
-                            </ui:repeat>
+                                </td>
+                            </tr>
+                        </ui:repeat>
                         </tbody>
                     </table>
                 </div>

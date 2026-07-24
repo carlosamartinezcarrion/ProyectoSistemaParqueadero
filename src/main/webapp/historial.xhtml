@@ -22,17 +22,17 @@
                 <div class="filters-row" style="margin-bottom:16px;">
                     <div class="field" style="min-width:240px;">
                         <label>Placa</label>
-                        <h:inputText value="#{historialBean.placaFiltro}" />
+                        <h:inputText value="#{historialController.placaFiltro}" />
                     </div>
                     <div class="field" style="min-width:180px;">
                         <label>Fecha</label>
-                        <p:datePicker value="#{historialBean.fechaFiltro}" showIcon="false"
+                        <p:datePicker value="#{historialController.fechaFiltro}" showIcon="false"
                                       placeholder="dd/MM/yyyy" dateFormat="dd/MM/yy"
                                       styleClass="fecha-input" />
                     </div>
                     <div class="field" style="min-width:200px;">
                         <label>Tipo de vehículo</label>
-                        <h:selectOneMenu value="#{historialBean.tipoFiltro}">
+                        <h:selectOneMenu value="#{historialController.tipoFiltro}">
                             <f:selectItem itemLabel="Todos los tipos" itemValue="" noSelectionOption="true" />
                             <f:selectItem itemLabel="Automóvil" itemValue="AUTOMOVIL" />
                             <f:selectItem itemLabel="Moto" itemValue="MOTO" />
@@ -42,38 +42,38 @@
                     <div class="field" style="align-self:end;">
                         <h:commandButton value="Filtrar" styleClass="btn btn-primary-soft" />
                     </div>
-                    <div class="pill primary" style="align-self:end;">#{historialBean.totalEncontrados} registros</div>
+                    <div class="pill primary" style="align-self:end;">#{historialController.totalEncontrados} registros</div>
                 </div>
 
                 <div class="table-wrap">
                     <table>
                         <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Placa</th>
-                                <th>Conductor</th>
-                                <th>Tipo</th>
-                                <th>Espacio</th>
-                                <th>Entrada</th>
-                                <th>Salida</th>
-                                <th>Duración</th>
-                                <th>Total</th>
-                            </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Placa</th>
+                            <th>Conductor</th>
+                            <th>Tipo</th>
+                            <th>Espacio</th>
+                            <th>Entrada</th>
+                            <th>Salida</th>
+                            <th>Duración</th>
+                            <th>Total</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <ui:repeat value="#{historialBean.registros}" var="registro">
-                                <tr>
-                                    <td>#{registro.id}</td>
-                                    <td><span class="table-chip">#{registro.vehiculo.placa}</span></td>
-                                    <td>#{registro.vehiculo.nombreConductor}</td>
-                                    <td>#{registro.vehiculo.tipo.descripcion}</td>
-                                    <td>#{registro.espacio.etiqueta}</td>
-                                    <td>#{registro.fechaHoraEntrada}</td>
-                                    <td>#{registro.fechaHoraSalida}</td>
-                                    <td>#{registro.duracionMinutos} min</td>
-                                    <td>$#{registro.totalCobrado}</td>
-                                </tr>
-                            </ui:repeat>
+                        <ui:repeat value="#{historialController.registros}" var="registro">
+                            <tr>
+                                <td>#{registro.uuid}</td>
+                                <td><span class="table-chip">#{registro.vehiculo.placa}</span></td>
+                                <td>#{registro.vehiculo.nombreConductor}</td>
+                                <td>#{registro.vehiculo.tipo.descripcion}</td>
+                                <td>#{registro.espacio.etiqueta}</td>
+                                <td>#{registro.fechaHoraEntrada}</td>
+                                <td>#{registro.fechaHoraSalida}</td>
+                                <td>#{registro.duracionMinutos} min</td>
+                                <td>$#{registro.totalCobrado}</td>
+                            </tr>
+                        </ui:repeat>
                         </tbody>
                     </table>
                 </div>

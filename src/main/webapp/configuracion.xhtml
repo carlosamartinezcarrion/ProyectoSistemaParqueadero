@@ -13,9 +13,9 @@
                     <p>Administra la informacion del parqueadero, tarifas y parametros de operacion.</p>
                 </div>
                 <div class="page-actions">
-            <h:form id="configuracionForm">
+                    <h:form id="configuracionForm">
                         <h:commandButton value="Restablecer por defecto"
-                                         action="#{configuracionBean.restablecerPorDefecto}"
+                                         action="#{configuracionController.restablecerPorDefecto}"
                                          styleClass="btn btn-ghost"
                                          onclick="return confirm('Se restauraran todos los valores por defecto. Continuar?')" />
                     </h:form>
@@ -29,7 +29,7 @@
                 <div class="form-grid">
                     <div class="field">
                         <label for="nombre">Nombre del establecimiento</label>
-                        <h:inputText id="nombre" value="#{configuracionBean.nombreParqueadero}"
+                        <h:inputText id="nombre" value="#{configuracionController.nombreParqueadero}"
                                      required="true"
                                      requiredMessage="El nombre es obligatorio"
                                      styleClass="config-input" />
@@ -37,7 +37,7 @@
                     </div>
                     <div class="field">
                         <label for="direccion">Direccion</label>
-                        <h:inputText id="direccion" value="#{configuracionBean.direccion}"
+                        <h:inputText id="direccion" value="#{configuracionController.direccion}"
                                      required="true"
                                      requiredMessage="La direccion es obligatoria"
                                      styleClass="config-input" />
@@ -46,7 +46,7 @@
                     <div class="form-grid-2col">
                         <div class="field">
                             <label for="filas">Filas</label>
-                            <h:inputText id="filas" value="#{configuracionBean.filasDefecto}"
+                            <h:inputText id="filas" value="#{configuracionController.filasDefecto}"
                                          required="true"
                                          requiredMessage="Las filas son obligatorias"
                                          styleClass="config-input" />
@@ -55,7 +55,7 @@
                         </div>
                         <div class="field">
                             <label for="columnas">Columnas</label>
-                            <h:inputText id="columnas" value="#{configuracionBean.columnasDefecto}"
+                            <h:inputText id="columnas" value="#{configuracionController.columnasDefecto}"
                                          required="true"
                                          requiredMessage="Las columnas son obligatorias"
                                          styleClass="config-input" />
@@ -65,14 +65,14 @@
                     </div>
                     <div class="field">
                         <label>Moneda</label>
-                        <div class="config-readonly">#{configuracionBean.moneda}</div>
+                        <div class="config-readonly">#{configuracionController.moneda}</div>
                         <small class="field-hint">La moneda no se puede modificar</small>
                     </div>
                 </div>
 
                 <h3 class="section-title" style="margin-top:28px;">Tarifas por tipo de vehiculo</h3>
                 <div class="tarifas-grid">
-                    <ui:repeat value="#{configuracionBean.tarifasEditables}" var="tarifa">
+                    <ui:repeat value="#{configuracionController.tarifasEditables}" var="tarifa">
                         <div class="tarifa-card">
                             <div class="tarifa-header">
                                 <span class="tarifa-tipo">#{tarifa.tipoDescripcion}</span>
@@ -100,7 +100,7 @@
 
                 <div class="config-actions">
                     <h:commandButton value="Guardar cambios"
-                                     action="#{configuracionBean.guardar}"
+                                     action="#{configuracionController.guardar}"
                                      styleClass="btn btn-primary" />
                 </div>
             </h:form>
