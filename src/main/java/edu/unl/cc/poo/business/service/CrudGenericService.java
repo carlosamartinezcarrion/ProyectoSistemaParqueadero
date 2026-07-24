@@ -1,5 +1,5 @@
 package edu.unl.cc.poo.business.service;
-import jakarta.ejb.Stateless;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaDelete;
@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * @author wduck (wilman at loxageek dot com)
  */
 
-@Stateless
+@ApplicationScoped
 public class CrudGenericService {
 
     private static final Logger LOGGER = Logger.getLogger(CrudGenericService.class.getSimpleName());
@@ -27,7 +27,7 @@ public class CrudGenericService {
     public static final String PERSISTENCE_FETCHGRAPH = "javax.persistence.fetchgraph";
     public static final String PERSISTENCE_LOADGRAPH = "javax.persistence.loadgraph";
 
-    @PersistenceContext//(name = "JbrewPU", unitName = "JbrewPU")
+    @PersistenceContext(unitName = "ParqueaderoPU")
     private EntityManager em;
 
     public <T> T create(T t) {

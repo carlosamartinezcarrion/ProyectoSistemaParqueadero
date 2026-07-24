@@ -1,24 +1,49 @@
 package edu.unl.cc.poo.domain;
 
-/**
- * Define el precio por hora y la fraccion de minutos aplicable
- * para el cobro en el parqueadero.
- */
+import edu.unl.cc.poo.domain.enums.TipoVehiculo;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import com.google.gson.annotations.Expose;
+
+@Entity
+@Table(name = "tarifa")
 public class Tarifa {
 
-    private static final String MONEDA = "USD";
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
+    private Long id;
 
-    private double precioPorHora;
-    private double fraccionMinutos;
+    @NotNull(message = "El tipo de vehículo es obligatorio")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_vehiculo", nullable = false, length = 20, unique = true)
+    @Expose
+    private TipoVehiculo tipoVehiculo;
 
-    /** Constructor vacío requerido por Gson. */
-    public Tarifa() {
-        this.precioPorHora = 1.0;
-        this.fraccionMinutos = 30;
-    }
+    @NotNull(message = "El precio por hora es obligatorio")
+    @DecimalMin(value = "0.01", message = "El precio por hora debe ser mayor a 0")
+    @Digits(integer = 8, fraction = 2, message = "El precio debe tener máximo 8 dígitos enteros y 2 decimales")
+    @Column(name = "precio_por_hora", nullable = false, precision = 10, scale = 2)
+    @Expose
+    private Double precioPorHora;
 
-    public Tarifa(double precioPorHora, double fraccionMinutos) {
+    @NotNull(message = "La fracción de minutos es obligatoria")
+    @Min(value = 1, message = "La fracción de minutos debe ser al menos 1")
+    @Max(value = 1440, message = "La fracción de minutos no puede exceder 1440 (24 horas)")
+    @Column(name = "fraccion_minutos", nullable = false)
+    @Expose
+    private Integer fraccionMinutos;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "configuracion_id", nullable = false)
+    @Expose(serialize = false)
+    private Configuracion configuracion;
+
+    public Tarifa() {}
+
+    public Tarifa(TipoVehiculo tipoVehiculo, Double precioPorHora, Integer fraccionMinutos) {
         validar(precioPorHora, fraccionMinutos);
+        this.tipoVehiculo = tipoVehiculo;
         this.precioPorHora = precioPorHora;
         this.fraccionMinutos = fraccionMinutos;
     }
@@ -32,48 +57,37 @@ public class Tarifa {
         }
     }
 
-    /**
-     * Calcula el costo redondeando hacia arriba a la fracción configurada.
-     * Ejemplo: 1h a $2/h con fracción 30 min → 2 fracciones de 0.5 h = $2.
-     */
     public double calcularCostos(long minutos) {
         if (minutos <= 0) {
             return 0.0;
         }
-        double fracciones = Math.ceil(minutos / fraccionMinutos);
+        double fracciones = Math.ceil(minutos / (double) fraccionMinutos);
         double costoPorFraccion = precioPorHora * (fraccionMinutos / 60.0);
         return Math.round(fracciones * costoPorFraccion * 100.0) / 100.0;
     }
 
-    public double getPrecioPorHora() {
-        return precioPorHora;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setPrecioPorHora(double precioPorHora) {
-        if (precioPorHora <= 0) {
+    public TipoVehiculo getTipoVehiculo() { return tipoVehiculo; }
+    public void setTipoVehiculo(TipoVehiculo tipoVehiculo) { this.tipoVehiculo = tipoVehiculo; }
+
+    public Double getPrecioPorHora() { return precioPorHora; }
+    public void setPrecioPorHora(Double precioPorHora) {
+        if (precioPorHora != null && precioPorHora <= 0) {
             throw new IllegalArgumentException("El precio por hora debe ser mayor a 0.");
         }
         this.precioPorHora = precioPorHora;
     }
 
-    public double getFraccionMinutos() {
-        return fraccionMinutos;
-    }
-
-    public void setFraccionMinutos(double fraccionMinutos) {
-        if (fraccionMinutos <= 0) {
+    public Integer getFraccionMinutos() { return fraccionMinutos; }
+    public void setFraccionMinutos(Integer fraccionMinutos) {
+        if (fraccionMinutos != null && fraccionMinutos <= 0) {
             throw new IllegalArgumentException("La fracción de minutos debe ser mayor a 0.");
         }
         this.fraccionMinutos = fraccionMinutos;
     }
 
-    public static String getMoneda() {
-        return MONEDA;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Tarifa{precioPorHora=%.2f %s, fraccionMinutos=%.0f min}",
-                precioPorHora, MONEDA, fraccionMinutos);
-    }
+    public Configuracion getConfiguracion() { return configuracion; }
+    public void setConfiguracion(Configuracion configuracion) { this.configuracion = configuracion; }
 }

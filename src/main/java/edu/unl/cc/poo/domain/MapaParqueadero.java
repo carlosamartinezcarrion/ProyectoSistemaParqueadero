@@ -1,26 +1,37 @@
 package edu.unl.cc.poo.domain;
 
 import edu.unl.cc.poo.domain.enums.EstadoEspacio;
-
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Gestiona la cuadricula bidimensional de espacios del parqueadero.
- */
+@Entity
+@Table(name = "mapa_parqueadero")
 public class MapaParqueadero {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "filas", nullable = false)
     private int filas;
+
+    @Column(name = "columnas", nullable = false)
     private int columnas;
-    private List<EspacioParqueadero> espacios;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parqueadero_id", nullable = false, unique = true)
+    private Parqueadero parqueadero;
+
+    @OneToMany(mappedBy = "mapa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EspacioParqueadero> espacios = new ArrayList<>();
+
+    public MapaParqueadero() {}
 
     public MapaParqueadero(int filas, int columnas) {
         this.filas = filas;
         this.columnas = columnas;
-        this.espacios = new ArrayList<>();
-        inicializarEspacios();
     }
-
 
     public EspacioParqueadero getEspacio(int fila, int columna) {
         return espacios.stream()
@@ -30,14 +41,12 @@ public class MapaParqueadero {
                         "No existe un espacio en la posición (" + fila + ", " + columna + ")."));
     }
 
-
     public EspacioParqueadero getPrimerEspacioLibre() {
         return espacios.stream()
                 .filter(EspacioParqueadero::estaLibre)
                 .findFirst()
                 .orElse(null);
     }
-
 
     public void redimensionar(int nuevasFilas, int nuevasColumnas) {
         this.filas = nuevasFilas;
@@ -50,7 +59,9 @@ public class MapaParqueadero {
         int numero = 1;
         for (int f = 0; f < filas; f++) {
             for (int c = 0; c < columnas; c++) {
-                espacios.add(new EspacioParqueadero(numero++, f, c));
+                EspacioParqueadero espacio = new EspacioParqueadero(numero++, f, c);
+                espacio.setMapa(this);
+                espacios.add(espacio);
             }
         }
     }
@@ -78,7 +89,18 @@ public class MapaParqueadero {
         }
     }
 
-    public int getFilas()    { return filas; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public int getFilas() { return filas; }
+    public void setFilas(int filas) { this.filas = filas; }
+
     public int getColumnas() { return columnas; }
+    public void setColumnas(int columnas) { this.columnas = columnas; }
+
+    public Parqueadero getParqueadero() { return parqueadero; }
+    public void setParqueadero(Parqueadero parqueadero) { this.parqueadero = parqueadero; }
+
     public List<EspacioParqueadero> getEspacios() { return espacios; }
+    public void setEspacios(List<EspacioParqueadero> espacios) { this.espacios = espacios; }
 }

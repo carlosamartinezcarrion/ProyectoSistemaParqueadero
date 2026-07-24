@@ -36,7 +36,7 @@ public class Ticket {
         this.nombreParqueadero = configuracion.getNombreParqueadero();
         this.registro = registro;
         this.fechaGeneracion = java.time.LocalDateTime.now().format(FORMATO_FECHA);
-        this.nombreArchivoPdf = "ticket_" + registro.getId() + ".pdf";
+        this.nombreArchivoPdf = "ticket_" + registro.getUuid() + ".pdf";
     }
 
     public String getRutaArchivoPdf() {

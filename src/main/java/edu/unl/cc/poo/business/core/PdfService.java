@@ -59,7 +59,7 @@ public class PdfService {
             Table tabla = new Table(UnitValue.createPercentArray(new float[]{40, 60}))
                     .setWidth(UnitValue.createPercentValue(100));
 
-            agregarFila(tabla, fontBold, font, "Registro ID:",   registro.getId());
+            agregarFila(tabla, fontBold, font, "Registro ID:",   registro.getUuid());
             agregarFila(tabla, fontBold, font, "Placa:",         registro.getVehiculo().getPlaca());
             agregarFila(tabla, fontBold, font, "Conductor:",     registro.getVehiculo().getNombreConductor());
             agregarFila(tabla, fontBold, font, "Tipo vehiculo:", registro.getVehiculo().getTipo().getDescripcion());

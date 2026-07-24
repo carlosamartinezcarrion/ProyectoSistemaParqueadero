@@ -1,7 +1,9 @@
 package edu.unl.cc.poo.domain;
 
 import edu.unl.cc.poo.domain.enums.EstadoEspacio;
-
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,25 +12,43 @@ import java.util.List;
  * Orquesta el registro de entradas/salidas,
  * consulta de espacios y generacion de resumenes.
  */
+@Entity
+@Table(name = "parqueadero")
 public class Parqueadero {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(max = 100, message = "El nombre no puede exceder 100 caracteres")
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
+
+    @Min(value = 1, message = "La capacidad debe ser al menos 1")
+    @Column(name = "capacidad", nullable = false)
     private int capacidad;
-    private MapaParqueadero mapa;
+
+    @NotNull(message = "La configuración es obligatoria")
+    @Valid
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "configuracion_id", nullable = false, unique = true)
     private Configuracion configuracion;
 
-    private final List<Registro> historial;
+    @OneToOne(mappedBy = "parqueadero", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private MapaParqueadero mapa;
+
+    @OneToMany(mappedBy = "parqueadero", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Registro> historial = new ArrayList<>();
+
+    public Parqueadero() {}
 
     public Parqueadero(String nombre, Configuracion configuracion) {
-        this.nombre = nombre != null && !nombre.isBlank()
-                ? nombre
-                : configuracion.getNombreParqueadero();
+        this.nombre = nombre;
         this.configuracion = configuracion;
-        this.mapa = new MapaParqueadero(
-                configuracion.getFilasDefecto(),
-                configuracion.getColumnasDefecto());
-        this.capacidad = configuracion.getFilasDefecto() * configuracion.getColumnasDefecto();
-        this.historial = new ArrayList<>();
+        if (configuracion != null) {
+            this.capacidad = configuracion.getFilasDefecto() * configuracion.getColumnasDefecto();
+        }
     }
 
     public Registro registrarEntrada(Vehiculo vehiculo, Integer fila, Integer columna) {
@@ -36,12 +56,11 @@ public class Parqueadero {
             throw new IllegalArgumentException("El vehículo es obligatorio.");
         }
 
-        // Evitar doble entrada de la misma placa
         Registro activoMismaPlaca = buscarRegistroActivoPorPlaca(vehiculo.getPlaca());
         if (activoMismaPlaca != null) {
             throw new IllegalStateException(
                     "Ya existe un registro activo para la placa "
-                            + vehiculo.getPlaca() + " (ID: " + activoMismaPlaca.getId() + ").");
+                            + vehiculo.getPlaca() + " (ID: " + activoMismaPlaca.getUuid() + ").");
         }
 
         EspacioParqueadero espacio;
@@ -62,7 +81,8 @@ public class Parqueadero {
         }
 
         Registro registro = new Registro(vehiculo, espacio);
-        espacio.ocupar(registro.getId());
+        registro.setParqueadero(this);
+        espacio.ocupar(registro.getUuid());
         historial.add(registro);
         return registro;
     }
@@ -70,7 +90,6 @@ public class Parqueadero {
     public Registro registrarSalida(String registroId) {
         Registro registro = buscarRegistroActivo(registroId);
         if (registro == null) {
-            // Permitir salir también por placa
             registro = buscarRegistroActivoPorPlaca(registroId);
         }
         if (registro == null) {
@@ -107,10 +126,6 @@ public class Parqueadero {
         espacio.setEstado(estado);
     }
 
-    /**
-     * Libera un espacio ocupado forzando el cierre del registro activo asociado
-     * (útil si se perdió la referencia del ticket).
-     */
     public Registro forzarLiberacionEspacio(int fila, int columna) {
         mapa.validarPosicion(fila, columna);
         EspacioParqueadero espacio = mapa.getEspacio(fila, columna);
@@ -132,7 +147,7 @@ public class Parqueadero {
         }
         String id = registroId.trim();
         return historial.stream()
-                .filter(r -> r.getId().equalsIgnoreCase(id) && r.estaActivo())
+                .filter(r -> r.getUuid().equalsIgnoreCase(id) && r.estaActivo())
                 .findFirst()
                 .orElse(null);
     }
@@ -146,16 +161,12 @@ public class Parqueadero {
                 .filter(Registro::estaActivo)
                 .filter(r -> r.getVehiculo().getPlaca().toLowerCase().equals(criterio)
                         || r.getVehiculo().getPlaca().toLowerCase().contains(criterio)
-                        || r.getId().toLowerCase().equals(criterio)
-                        || r.getId().toLowerCase().contains(criterio))
+                        || r.getUuid().toLowerCase().equals(criterio)
+                        || r.getUuid().toLowerCase().contains(criterio))
                 .findFirst()
                 .orElse(null);
     }
 
-    /**
-     * Aplica cambios de nombre y dimensiones desde la configuración.
-     * No redimensiona si hay registros activos (vehículos dentro).
-     */
     public void aplicarConfiguracion() {
         this.nombre = configuracion.getNombreParqueadero();
         int nuevasFilas = configuracion.getFilasDefecto();
@@ -174,27 +185,21 @@ public class Parqueadero {
         }
     }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public int getCapacidad() {
-        return capacidad;
-    }
+    public int getCapacidad() { return capacidad; }
+    public void setCapacidad(int capacidad) { this.capacidad = capacidad; }
 
-    public MapaParqueadero getMapa() {
-        return mapa;
-    }
+    public Configuracion getConfiguracion() { return configuracion; }
+    public void setConfiguracion(Configuracion configuracion) { this.configuracion = configuracion; }
 
-    public Configuracion getConfiguracion() {
-        return configuracion;
-    }
+    public MapaParqueadero getMapa() { return mapa; }
+    public void setMapa(MapaParqueadero mapa) { this.mapa = mapa; }
 
-    public List<Registro> getHistorial() {
-        return historial;
-    }
+    public List<Registro> getHistorial() { return historial; }
+    public void setHistorial(List<Registro> historial) { this.historial = historial; }
 }
