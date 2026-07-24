@@ -1,0 +1,128 @@
+<ui:composition template="/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:param name="activePage" value="entrada" />
+    <ui:define name="title">Registrar Entrada - AutoManager</ui:define>
+    <ui:define name="content">
+        <section class="page-header">
+            <h2>Registrar Nueva Entrada</h2>
+            <p>Complete los detalles del vehículo y asigne un espacio disponible.</p>
+        </section>
+
+        <h:form id="entradaForm">
+            <div class="entry-grid">
+                <section class="bento-card">
+                    <h3 class="section-title">Detalles del Vehículo</h3>
+                    <div class="form-grid">
+                        <div class="field">
+                            <label>Placa del vehiculo</label>
+                            <h:inputText id="placa" value="#{registroController.placa}" maxlength="12"
+                                         required="true" requiredMessage="La placa es obligatoria." />
+                            <h:message for="placa" styleClass="field-error" />
+                        </div>
+                        <div class="field">
+                            <label>Nombre del conductor</label>
+                            <h:inputText id="conductor" value="#{registroController.conductor}"
+                                         required="true" requiredMessage="El nombre del conductor es obligatorio." />
+                            <h:message for="conductor" styleClass="field-error" />
+                        </div>
+                        <div class="field">
+                            <label>Tipo de vehículo</label>
+                            <h:selectOneMenu value="#{registroController.tipo}">
+                                <f:selectItems value="#{tipoVehiculoController.items}" />
+                            </h:selectOneMenu>
+                        </div>
+                        <div class="field">
+                            <label>Espacio seleccionado</label>
+                            <h:inputText value="#{registroController.espacioSeleccionado}" readonly="true" />
+                        </div>
+                    </div>
+                    <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;">
+                        <h:commandButton value="Confirmar Registro" action="#{registroController.registrarEntrada}"
+                                         styleClass="btn btn-primary" />
+                        <h:commandButton value="Limpiar selección de espacio"
+                                         action="#{registroController.limpiarSeleccionEspacio}"
+                                         styleClass="btn btn-primary-soft" />
+                        <h:commandButton value="Limpiar formulario"
+                                         action="#{registroController.limpiarFormularioEntrada}"
+                                         styleClass="btn btn-ghost" immediate="true" />
+                    </div>
+                </section>
+
+                <section class="bento-card">
+                    <div class="status-line" style="margin-bottom:16px;">
+                        <div>
+                            <h3 class="section-title" style="margin-bottom:4px;">Seleccionar Espacio</h3>
+                            <div class="muted">Haz clic en un espacio libre para asignarlo</div>
+                        </div>
+                        <span class="pill success">#{mapaController.disponibles} libres</span>
+                    </div>
+
+                    <div class="legend-row" style="margin-bottom:16px;">
+                        <span class="pill success">Libre</span>
+                        <span class="pill warning">Ocupado</span>
+                        <span class="pill">Inhabilitado</span>
+                        <span class="pill primary">Seleccionado: #{registroController.espacioSeleccionado}</span>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <ui:repeat value="#{mapaController.filas}" var="fila">
+                            <div class="parking-row">
+                                <div class="row-label">#{fila + 1}</div>
+                                <div class="parking-row-spots" style="display:grid; gap:8px; grid-template-columns:#{mapaController.gridTemplateColumns};">
+                                    <ui:repeat value="#{mapaController.espaciosPorFila[fila]}" var="espacio">
+                                        <h:commandButton action="#{registroController.seleccionarEspacio(espacio.fila, espacio.columna)}"
+                                                         value="#{espacio.etiqueta}"
+                                                         styleClass="spot #{espacio.estaLibre() ? 'available' : espacio.estaOcupado() ? 'occupied' : 'disabled'} #{registroController.fila eq espacio.fila and registroController.columna eq espacio.columna ? 'selected' : ''}"
+                                                         disabled="#{not espacio.estaLibre()}" />
+                                    </ui:repeat>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </section>
+
+                <aside class="status-card bento-card">
+                    <div class="status-list">
+                        <div class="status-item">
+                            <div>
+                                <strong>Capacidad total</strong>
+                                <small>#{registroController.capacidad} espacios</small>
+                            </div>
+                            <span class="pill primary">#{registroController.porcentajeOcupacion} %</span>
+                        </div>
+                        <div class="status-item">
+                            <div>
+                                <strong>Ocupados</strong>
+                                <small>#{mapaController.ocupados} vehículos</small>
+                            </div>
+                            <span class="pill warning">#{mapaController.ocupados}</span>
+                        </div>
+                        <div class="status-item">
+                            <div>
+                                <strong>Inhabilitados</strong>
+                                <small>Espacios fuera de servicio</small>
+                            </div>
+                            <span class="pill">#{mapaController.inhabilitados}</span>
+                        </div>
+                    </div>
+
+                    <div class="card mini-card" style="margin-top:16px;">
+                        <strong>Registros recientes</strong>
+                        <div class="muted" style="margin-top:8px;">Últimas entradas guardadas en el sistema.</div>
+                        <div class="compact-list" style="margin-top:12px;">
+                            <ui:repeat value="#{registroController.historialReciente}" var="registro">
+                                <div class="compact-item">
+                                    <h4>#{registro.vehiculo.placa}</h4>
+                                    <p>#{registro.espacio.etiqueta} · #{registro.uuid}</p>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

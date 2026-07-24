@@ -1,0 +1,150 @@
+<ui:composition template="/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:param name="activePage" value="salida" />
+    <ui:define name="title">Registrar Salida - AutoManager</ui:define>
+    <ui:define name="content">
+        <section class="page-header">
+            <h2>Procesar Salida de Vehiculo</h2>
+            <p>Busca el registro activo y calcula el importe total de la estadia.</p>
+        </section>
+
+        <div class="exit-grid">
+            <section class="bento-card">
+                <h3 class="section-title">Buscar registro</h3>
+                <h:form id="busquedaForm">
+                    <div class="field">
+                        <label>ID de registro o placa</label>
+                        <h:inputText id="registroId" value="#{registroController.registroId}" />
+                        <h:message for="registroId" styleClass="field-error" />
+                    </div>
+                    <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
+                        <p:commandButton value="Buscar" action="#{registroController.buscarRegistrosActivos}"
+                                         update="busquedaForm resultadosForm" styleClass="btn btn-primary-soft" />
+                        <p:commandButton value="Procesar salida" action="#{registroController.registrarSalida}"
+                                         disabled="#{empty registroController.registroConsultado}"
+                                         update="busquedaForm resultadosForm pagoForm"
+                                         styleClass="btn btn-primary" />
+                    </div>
+                </h:form>
+
+                <h:form id="resultadosForm">
+                    <ui:fragment rendered="#{not empty registroController.registrosActivosBusqueda}">
+                        <div class="table-wrap" style="margin-top:20px;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Placa</th>
+                                        <th>Conductor</th>
+                                        <th>Tipo</th>
+                                        <th>Espacio</th>
+                                        <th>Entrada</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ui:repeat value="#{registroController.registrosActivosBusqueda}" var="reg" varStatus="st">
+                                        <tr>
+<td>#{reg.uuid}</td>
+                                             <td><span class="table-chip">#{reg.vehiculo.placa}</span></td>
+                                            <td>#{reg.vehiculo.nombreConductor}</td>
+                                            <td>#{reg.vehiculo.tipo.descripcion}</td>
+                                            <td>#{reg.espacio.etiqueta}</td>
+                                            <td>#{reg.fechaHoraEntrada}</td>
+                                            <td>
+                                                <p:commandButton value="Seleccionar"
+                                                                 action="#{registroController.seleccionarRegistro}"
+                                                                 update="busquedaForm resultadosForm pagoForm"
+                                                                 styleClass="btn #{registroController.indiceRegistroSeleccionado eq st.index ? 'btn-primary' : 'btn-ghost'}" style="font-size:12px; padding:4px 12px;">
+                                                    <f:setPropertyActionListener target="#{registroController.indiceRegistroSeleccionado}" value="#{st.index}" />
+                                                </p:commandButton>
+                                            </td>
+                                        </tr>
+                                    </ui:repeat>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ui:fragment>
+
+                    <div class="card mini-card" style="margin-top:20px;">
+                        <strong>Resultado de la busqueda</strong>
+                        <div class="muted" style="margin-top:8px;">
+                            #{empty registroController.registroConsultado ? 'No hay un registro cargado todavia.' : registroController.resumenOperacion}
+                        </div>
+                    </div>
+                </h:form>
+            </section>
+
+            <h:form id="pagoForm">
+                <aside class="bento-card">
+                    <div class="status-line" style="margin-bottom:24px;">
+                        <div>
+                            <h3 class="section-title" style="margin-bottom:4px;">Calculo de Pago</h3>
+                            <div style="opacity:.6;">Resumen antes de cerrar el movimiento</div>
+                        </div>
+                        <span class="pill success">#{empty registroController.registroConsultado ? 'Sin datos' : (registroController.registroConsultado.estaActivo() ? 'Activo' : 'Cerrado')}</span>
+                    </div>
+
+                    <div class="compact-list">
+                        <div class="compact-item">
+                            <h4>ID</h4>
+                            <p>#{empty registroController.registroConsultado ? '—' : registroController.registroConsultado.uuid}</p>
+                        </div>
+                        <div class="compact-item">
+                            <h4>Placa</h4>
+                            <p>#{empty registroController.registroConsultado ? '—' : registroController.registroConsultado.vehiculo.placa}</p>
+                        </div>
+                        <div class="compact-item">
+                            <h4>Conductor</h4>
+                            <p>#{empty registroController.registroConsultado ? '—' : registroController.registroConsultado.vehiculo.nombreConductor}</p>
+                        </div>
+                        <div class="compact-item">
+                            <h4>Espacio</h4>
+                            <p>#{empty registroController.registroConsultado ? '—' : registroController.registroConsultado.espacio.etiqueta}</p>
+                        </div>
+                        <div class="compact-item">
+                            <h4>Total cobrado</h4>
+                            <p>
+                                #{empty registroController.registroConsultado or not registroController.salidaProcesada
+                                    ? '—'
+                                    : registroController.registroConsultado.totalCobrado} USD
+                            </p>
+                        </div>
+                    </div>
+
+                    <ui:fragment rendered="#{registroController.mostrarDialogoTicket}">
+                        <div style="margin-top:24px; padding:16px; background:var(--surface-2); border-radius:14px; text-align:center;">
+                            <div style="font-weight:700; margin-bottom:12px;">Desea generar el ticket PDF?</div>
+                            <div style="display:flex; gap:12px; justify-content:center;">
+                                <p:commandButton value="Si, generar ticket"
+                                                 action="#{registroController.confirmarTicket(true)}"
+                                                 update="pagoForm resultadosForm"
+                                                 styleClass="btn btn-primary" />
+                                <p:commandButton value="No"
+                                                 action="#{registroController.confirmarTicket(false)}"
+                                                 update="pagoForm resultadosForm"
+                                                 styleClass="btn btn-ghost" />
+                            </div>
+                        </div>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{not registroController.mostrarDialogoTicket and not empty registroController.pdfDownloadUrl}">
+                        <div style="margin-top:24px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
+                            <div>
+                                <div style="font-size:12px; opacity:.6;">Ticket PDF</div>
+                                <a href="#{request.contextPath}/#{registroController.pdfDownloadUrl}" target="_blank"
+                                   style="font-weight:800; color:var(--success); text-decoration:underline;">
+                                    #{registroController.pdfGenerado}
+                                </a>
+                            </div>
+                            <span class="pill primary">#{registroController.historialCount} registros</span>
+                        </div>
+                    </ui:fragment>
+                </aside>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
