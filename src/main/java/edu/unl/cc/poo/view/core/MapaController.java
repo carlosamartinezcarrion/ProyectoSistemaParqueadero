@@ -1,9 +1,9 @@
 package edu.unl.cc.poo.view.core;
 
 import edu.unl.cc.poo.business.core.ParqueaderoService;
-import edu.unl.cc.poo.domain.enums.EstadoEspacio;
 import edu.unl.cc.poo.domain.EspacioParqueadero;
 import edu.unl.cc.poo.domain.Registro;
+import edu.unl.cc.poo.domain.enums.EstadoEspacio;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
@@ -16,9 +16,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@Named("mapaBean")
+@Named("mapaController")
 @ViewScoped
-public class MapaBean implements Serializable {
+public class MapaController implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Inject
@@ -151,43 +151,15 @@ public class MapaBean implements Serializable {
                 .name();
     }
 
-    public long getDisponibles() {
-        return parqueaderoService.getEspaciosDisponibles();
-    }
-
-    public long getOcupados() {
-        return parqueaderoService.getOcupados();
-    }
-
-    public long getInhabilitados() {
-        return parqueaderoService.getInhabilitados();
-    }
-
-    public double getPorcentajeOcupacion() {
-        return parqueaderoService.getPorcentajeOcupacion();
-    }
-
-    public Integer getFilaSeleccionada() {
-        return filaSeleccionada;
-    }
-
-    public Integer getColumnaSeleccionada() {
-        return columnaSeleccionada;
-    }
-
-    public String getZonaSeleccionada() {
-        return zonaSeleccionada;
-    }
-
-    public void setZonaSeleccionada(String zonaSeleccionada) {
-        this.zonaSeleccionada = zonaSeleccionada;
-    }
-
-    public String getModoVista() {
-        return modoVista;
-    }
-
-    public void setModoVista(String modoVista) {
-        this.modoVista = modoVista;
-    }
+    public long getDisponibles() { return parqueaderoService.getEspaciosDisponibles(); }
+    public long getOcupados() { return parqueaderoService.getOcupados(); }
+    public long getInhabilitados() { return parqueaderoService.getInhabilitados(); }
+    public double getPorcentajeOcupacion() { return parqueaderoService.getPorcentajeOcupacion(); }
+    public List<Registro> getHistorialReciente() { return parqueaderoService.getHistorialReciente(); }
+    public Integer getFilaSeleccionada() { return filaSeleccionada; }
+    public Integer getColumnaSeleccionada() { return columnaSeleccionada; }
+    public String getZonaSeleccionada() { return zonaSeleccionada; }
+    public void setZonaSeleccionada(String zonaSeleccionada) { this.zonaSeleccionada = zonaSeleccionada; }
+    public String getModoVista() { return modoVista; }
+    public void setModoVista(String modoVista) { this.modoVista = modoVista; }
 }

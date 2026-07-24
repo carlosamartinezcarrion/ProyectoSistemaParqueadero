@@ -1,4 +1,4 @@
-package edu.unl.cc.poo.view;
+package edu.unl.cc.poo.view.registration;
 
 import edu.unl.cc.poo.domain.enums.TipoVehiculo;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -8,9 +8,9 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
-@Named("tipoVehiculoBean")
+@Named("tipoVehiculoController")
 @ApplicationScoped
-public class TipoVehiculoBean implements Serializable {
+public class TipoVehiculoController implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public List<SelectItem> getItems() {

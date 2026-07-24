@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-@Named("dashboardBean")
+@Named("dashboardController")
 @RequestScoped
-public class DashboardBean implements Serializable {
+public class DashboardController implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Inject
@@ -28,6 +28,7 @@ public class DashboardBean implements Serializable {
     public long getInhabilitados() { return parqueaderoService.getInhabilitados(); }
     public double getTotalRecaudado() { return parqueaderoService.getTotalRecaudado(); }
     public double getPorcentajeOcupacion() { return parqueaderoService.getPorcentajeOcupacion(); }
+    public String getNombreParqueadero() { return parqueaderoService.getNombreParqueadero(); }
 
     public List<Registro> getUltimosRegistros() {
         return parqueaderoService.getHistorialReciente(5);
