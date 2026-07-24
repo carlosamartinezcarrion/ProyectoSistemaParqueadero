@@ -1,9 +1,9 @@
 services:
 
-  parqueadero-db:
+  Parqueadero-db:
     image: postgres:${POSTGRES_VERSION}
     restart: unless-stopped
-    container_name: parqueadero-pg-db-container
+    container_name: Parqueadero-pg-db-container
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -11,10 +11,10 @@ services:
     ports:
       - ${DB_PGSQL_PORT_PUBLIC}:5432
     volumes:
-      - parqueadero-pg-data:/var/lib/postgresql
+      - Parqueadero-pg-data:/var/lib/postgresql
     networks:
-      parqueadero-pg-network:
-        ipv4_address: 172.23.0.251
+      Parqueadero-pg-network:
+        ipv4_address: 172.21.0.251
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       interval: 10s
@@ -22,20 +22,8 @@ services:
       retries: 5
       start_period: 30s
 
-  parqueadero-view-adminer:
-    container_name: parqueadero-adminer-container
-    image: adminer
-    restart: unless-stopped
-    ports:
-      - 8180:8080
-    depends_on:
-      - parqueadero-db
-    networks:
-      parqueadero-pg-network:
-        ipv4_address: 172.23.0.253
-
-  parqueadero-view-pgadmin4:
-    container_name: parqueadero-pgadmin4-container
+  Parqueadero-view-pgadmin4:
+    container_name: Parqueadero-pgadmin4-container
     image: dpage/pgadmin4
     restart: unless-stopped
     environment:
@@ -44,22 +32,22 @@ services:
     ports:
       - 81:80
     depends_on:
-      - parqueadero-db
+      - Parqueadero-db
     networks:
-      parqueadero-pg-network:
-        ipv4_address: 172.23.0.254
+      Parqueadero-pg-network:
+        ipv4_address: 172.21.0.254
 
 networks:
-  parqueadero-pg-network:
+  Parqueadero-pg-network:
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet: 172.23.0.0/24
+        - subnet: 172.21.0.0/24
 
 volumes:
-  parqueadero-pg-data:
-    name: parqueadero-pg-data-local
+  Parqueadero-pg-data:
+    name: Parqueadero-pg-data-local
     driver: local
     driver_opts:
       type: none
